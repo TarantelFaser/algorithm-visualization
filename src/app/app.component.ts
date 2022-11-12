@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'algorithm-vizualisation';
+
+  buttonClicked() {
+    alert("Dieser Button wurde gedrückt");
+  }
 }
