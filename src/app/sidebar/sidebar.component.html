@@ -1,3 +1,22 @@
-<div class="container">
-    <button>Test</button>
+<div class="sidebar">
+    <div class="container">
+        <button mat-raised-button color="accent">Start Simulation</button>
+        <mat-slider thumbLabel min="1" max="10" step="1" value="5"></mat-slider>
+        
+        <hr>
+
+        <mat-form-field>
+            <mat-label>Select an algorithm</mat-label>
+            <mat-select>
+                <mat-option>- - -</mat-option>
+                <mat-optgroup label="Pathfinding algorithms">
+                    <mat-option value="A* Algorithm">A* Algorithm</mat-option>
+                </mat-optgroup>
+                <mat-optgroup label="Sorting algorithms">
+                    <mat-option value="Quicksort">Quicksort</mat-option>
+                    <mat-option value="Mergesort">Mergesort</mat-option>
+                </mat-optgroup>
+            </mat-select>
+        </mat-form-field>
+    </div>
 </div>

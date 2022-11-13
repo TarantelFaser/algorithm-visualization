@@ -1,14 +1,23 @@
 
-.container {
-    flex: content;
-    flex-direction: column;
-    width: 100px;
+.sidebar {
+    width: 12%;
+    min-width: 150px;
     height: 100%;
-    padding: 40px 40px 40px 40px;
-    margin-top: 3px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.container {
+    margin: 0px 10px 10px 10px;
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 button {
+    width: 100%;
+}
+
+hr {
     width: 100%;
 }
