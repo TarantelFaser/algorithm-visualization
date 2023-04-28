@@ -1,13 +1,21 @@
-header {
-    background-color: rgba(255, 255, 255, 1);
-    position: fixed;
-    width: 100%;
-    position: 0;
+.header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  background-color: #505050;
+  justify-content: space-between;
 }
 
-.logo {
-    height: 40px;
-    margin-left: 20px;
-    margin-top: 10px;
-    margin-bottom: 5px;
+.title-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  font-family: Monaco, "Lucida Console", monospace;
+  font-weight: bolder;
+  font-size: 18px;
+  color: #ffd600;
 }

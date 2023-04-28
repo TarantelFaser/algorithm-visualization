@@ -1,0 +1,17 @@
+.app-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-items: stretch;
+}
+
+$header-height: 60px;
+
+.header {
+  height: $header-height;
+}
+
+.body {
+  height: calc(100vh - $header-height);
+}
