@@ -1,9 +1,21 @@
+$yellow-t : #ffd600;
+
 .body-container {
   display: grid;
   justify-content: center;
   height: 100%;
   background-color: #4f4f4f;
   border-radius: 10px;
+}
+
+.cell-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.grid-container {
+  border-radius: 10px;
+  margin: 5px;
 }
 
 .cell {
@@ -15,18 +27,17 @@
 }
 
 .cell:hover {
-  background-color: #ffd600;
-  border-radius: 1px;
-  transition: 0.3s;
-  transform: scale(1.5);
+  background-color: rgba(255, 214, 0, 0);
+  border: 1px solid #000000;
+  border-radius: 4px;
+  transition: 0.2s;
+  transform: scale(1.2);
 }
 
-.cell-row {
-  display: flex;
-  flex-direction: row;
+.cell-selected {
+  background-color: $yellow-t;
 }
 
-.grid-container {
-  border-radius: 10px;
-  margin: 5px;
+.cell-selected:hover {
+  background-color: $yellow-t;
 }

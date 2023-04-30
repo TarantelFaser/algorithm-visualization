@@ -1,7 +1,9 @@
 <div class="body-container">
   <table class="grid-container">
-    <tr *ngFor="let i of cellsVertical" class="cell-row">
-      <td *ngFor="let j of cellsHorizontal"
+    <tr *ngFor="let row of cells; let idx_h = index" class="cell-row">
+      <td *ngFor="let j of row; let idx_v = index"
+          (mousedown)="this.cells![idx_h][idx_v] = cellTypes.Selected"
+          [ngClass]="cells![idx_h][idx_v] === cellTypes.Selected ? 'cell-selected' : ''"
            class="cell">
       </td>
     </tr>
