@@ -6,7 +6,7 @@ import {ResizedEvent} from "angular-resize-event";
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })
-export class BodyComponent implements AfterViewInit {
+export class BodyComponent{
 
   public cellsHorizontal: number[] | undefined;
   public cellsVertical: number[] | undefined;
@@ -23,8 +23,8 @@ export class BodyComponent implements AfterViewInit {
 
     this.cellSize = 25;
 
-    let maxCellCountHorizontal : number = Math.round((width - 0.01*width) / this.cellSize)
-    let maxCellCountVertical : number = Math.round((height - 0.01*height) / this.cellSize)
+    let maxCellCountHorizontal : number = Math.round((width - 0.01*width) / this.cellSize);
+    let maxCellCountVertical : number = Math.round((height - 0.01*height) / this.cellSize);
 
     this.cellsHorizontal = Array(maxCellCountHorizontal).fill(0);
     this.cellsVertical = Array(maxCellCountVertical).fill(0);

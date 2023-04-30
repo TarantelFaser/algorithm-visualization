@@ -6,6 +6,9 @@ body {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+$yellow-color: #ffd600;
+$main-border-radius: 10px;
+
 .yellow-button {
-  background-color: #ffd600;
+  background-color: $yellow-color;
 }

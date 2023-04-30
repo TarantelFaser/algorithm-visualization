@@ -1,17 +1,24 @@
 .app-container {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-items: stretch;
 }
 
-$header-height: 60px;
+.app-centerer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  width: 90vw;
+  height: 90vh;
+}
+
+$header-height: 75px;
 
 .header {
   height: $header-height;
 }
 
 .body {
-  height: calc(100vh - $header-height);
+  height: 100%;
 }

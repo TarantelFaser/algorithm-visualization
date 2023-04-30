@@ -1,8 +1,12 @@
+$inner-padding: 10px;
+
 .header-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px;
+  height: calc(100% - 2*$inner-padding);
+  padding: $inner-padding;
+  border-radius: 10px;
   background-color: #505050;
   justify-content: space-between;
 }

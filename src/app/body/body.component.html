@@ -1,7 +1,9 @@
 <div class="body-container">
-  <div *ngFor="let i of cellsVertical" class="cell-row">
-    <div *ngFor="let j of cellsHorizontal"
-         class="cell">
-    </div>
-  </div>
+  <table class="grid-container">
+    <tr *ngFor="let i of cellsVertical" class="cell-row">
+      <td *ngFor="let j of cellsHorizontal"
+           class="cell">
+      </td>
+    </tr>
+  </table>
 </div>
