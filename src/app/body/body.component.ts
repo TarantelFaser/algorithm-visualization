@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ResizedEvent} from "angular-resize-event";
+import {Component, ElementRef,} from '@angular/core';
 
 @Component({
   selector: 'app-body',
