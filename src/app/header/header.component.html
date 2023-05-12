@@ -8,6 +8,7 @@
             (click)="changeUseMode(useMode.PlaceStart)"
             [ngClass]="userController.currentUseMode === useMode.PlaceStart ? 'selected-action' : ''"
             matTooltip="place the starting point"
+            [matTooltipShowDelay]="500"
             class="yellow-button">
       <mat-icon>my_location</mat-icon>
     </button>
@@ -15,6 +16,7 @@
             (click)="changeUseMode(useMode.PlaceEnd)"
             [ngClass]="userController.currentUseMode === useMode.PlaceEnd ? 'selected-action' : ''"
             matTooltip="place the finishing point"
+            [matTooltipShowDelay]="500"
             class="yellow-button">
       <mat-icon>place</mat-icon>
     </button>
@@ -25,6 +27,7 @@
             (click)="changeUseMode(useMode.PlaceWall)"
             [ngClass]="userController.currentUseMode === useMode.PlaceWall ? 'selected-action' : ''"
             matTooltip="place a wall"
+            [matTooltipShowDelay]="500"
             class="yellow-button">
       <mat-icon>error</mat-icon>
     </button>

@@ -1,5 +1,7 @@
 import {Component, ElementRef,} from '@angular/core';
-import {cellTypes} from "../global/enums";
+import {cellTypes, useMode} from "../global/enums";
+import {userController} from "../global/userController";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-body',
@@ -8,22 +10,21 @@ import {cellTypes} from "../global/enums";
 })
 
 export class BodyComponent{
-  protected readonly cellTypes = cellTypes;
-  public cellSize : number | undefined;
   public cells : cellTypes[][]| undefined = [];
+  public isMouseDown = false;
+  private placedStart = false;
 
-  public canPaint = false;
-
-  constructor(private el : ElementRef) {
+  constructor(private el : ElementRef,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    let width = this.el.nativeElement!.clientWidth;
+    let width = this.el.nativeElement!.clientWidth-6;
     let height = this.el.nativeElement!.clientHeight;
-    this.cellSize = 25;
 
-    let maxCellCountHorizontal : number = Math.round((width - 0.01*width) / this.cellSize);
-    let maxCellCountVertical : number = Math.round((height - 0.01*height) / this.cellSize);
+    let cellSize = 25;
+    let maxCellCountHorizontal : number = Math.round((width - 0.01*width) / cellSize);
+    let maxCellCountVertical : number = Math.round((height - 0.01*height) / cellSize);
 
     for (let i = 0; i < maxCellCountVertical; i++) {
       this.cells!.push([])
@@ -31,12 +32,31 @@ export class BodyComponent{
         this.cells![i].push(cellTypes.Unused);
       }
     }
+  }
 
-    this.cells![1][1] = this.cellTypes.Start;
+  public mouseDown(idx_h: number, idx_v: number) {
+    this.isMouseDown = true;
+    this.handleMouseAction(idx_h, idx_v);
   }
 
   public handleMouseAction(idx_h: number, idx_v: number) {
-    if (!this.canPaint) return;
+    if (!this.isMouseDown) return;
+
+    if (!this.cells) {
+      throw new Error("Cells Array Error")
+    }
+
+    switch (userController.currentUseMode) {
+      case useMode.PlaceStart:
+        if (!this.placedStart) {
+          this.cells[idx_h][idx_v] = cellTypes.Start;
+          this.placedStart = true;
+        } else {
+          this.snackBar.open("Already placed a starting point!", "Ok", {duration: 3000})
+        }
+    }
     this.cells![idx_h][idx_v] === cellTypes.Unused ? this.cells![idx_h][idx_v] = cellTypes.Selected : this.cells![idx_h][idx_v] = cellTypes.Selected
   }
+
+  protected readonly cellTypes = cellTypes;
 }
