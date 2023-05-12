@@ -12,6 +12,5 @@ export enum useMode {
   None,
   PlaceStart,
   PlaceEnd,
-  PlaceWall,
-  Remove
+  PlaceWall
 }

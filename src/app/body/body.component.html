@@ -7,8 +7,14 @@
           (mouseenter)="handleMouseAction(idx_h, idx_v)"
           draggable="false"
           class="cell">
-        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Selected" class="cell cell-selected"></div>
-        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Start" class="cell cell-start"></div>
+        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Selected" class="inner-cell cell-selected"></div>
+        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Start" class="inner-cell cell-start-end">
+          <mat-icon>my_location</mat-icon>
+        </div>
+        <div *ngIf="cells![idx_h][idx_v] === cellTypes.End" class="inner-cell cell-start-end">
+          <mat-icon>place</mat-icon>
+        </div>
+        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Wall" class="inner-cell cell-wall"></div>
       </td>
     </tr>
   </table>

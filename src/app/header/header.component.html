@@ -21,7 +21,7 @@
       <mat-icon>place</mat-icon>
     </button>
 
-    <mat-divider vertical="true" id="action-divider"></mat-divider>
+    <mat-divider vertical="true" class="action-divider"></mat-divider>
 
     <button mat-raised-button
             (click)="changeUseMode(useMode.PlaceWall)"
@@ -30,6 +30,17 @@
             [matTooltipShowDelay]="500"
             class="yellow-button">
       <mat-icon>error</mat-icon>
+    </button>
+
+    <mat-divider vertical="true" class="action-divider"></mat-divider>
+
+    <button mat-raised-button
+            (click)="changeUseMode(useMode.None)"
+            [ngClass]="userController.currentUseMode === useMode.None ? 'selected-action' : ''"
+            matTooltip="delete a tile"
+            [matTooltipShowDelay]="500"
+            class="yellow-button">
+      <mat-icon>delete</mat-icon>
     </button>
   </div>
 </div>

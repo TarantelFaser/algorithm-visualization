@@ -13,16 +13,17 @@ export class BodyComponent{
   public cells : cellTypes[][]| undefined = [];
   public isMouseDown = false;
   private placedStart = false;
+  private placedEnd = false;
 
   constructor(private el : ElementRef,
               private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    let width = this.el.nativeElement!.clientWidth-6;
+    let width = this.el.nativeElement!.clientWidth;
     let height = this.el.nativeElement!.clientHeight;
 
-    let cellSize = 25;
+    let cellSize = 23;
     let maxCellCountHorizontal : number = Math.round((width - 0.01*width) / cellSize);
     let maxCellCountVertical : number = Math.round((height - 0.01*height) / cellSize);
 
@@ -34,6 +35,7 @@ export class BodyComponent{
     }
   }
 
+  //makes painting one cell easier
   public mouseDown(idx_h: number, idx_v: number) {
     this.isMouseDown = true;
     this.handleMouseAction(idx_h, idx_v);
@@ -54,8 +56,25 @@ export class BodyComponent{
         } else {
           this.snackBar.open("Already placed a starting point!", "Ok", {duration: 3000})
         }
+        break;
+
+      case useMode.PlaceEnd:
+        if (!this.placedEnd) {
+          this.cells[idx_h][idx_v] = cellTypes.End;
+          this.placedEnd = true;
+        } else {
+          this.snackBar.open("Already placed a ending point!", "Ok", {duration: 3000})
+        }
+        break;
+
+      case useMode.PlaceWall:
+        this.cells[idx_h][idx_v] = cellTypes.Wall;
+        break;
+
+      case useMode.None:
+        this.cells[idx_h][idx_v] = cellTypes.Unused;
+        break;
     }
-    this.cells![idx_h][idx_v] === cellTypes.Unused ? this.cells![idx_h][idx_v] = cellTypes.Selected : this.cells![idx_h][idx_v] = cellTypes.Selected
   }
 
   protected readonly cellTypes = cellTypes;

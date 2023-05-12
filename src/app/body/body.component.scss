@@ -23,7 +23,24 @@ $yellow-t : #ffd600;
   color: white;
   height: 21px;
   width: 21px;
-  border: 1px solid #545454
+  border: 1px solid #545454;
+  padding: 0;
+}
+
+.inner-cell {
+  height: 100%;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.inner-cell:hover {
+  border-radius: 3px;
+}
+
+.inner-cell > mat-icon {
+  font-size: 21px;
+  color: #2a2a2a;
+  margin: auto;
 }
 
 .cell:hover {
@@ -42,10 +59,18 @@ $yellow-t : #ffd600;
   background-color: $yellow-t;
 }
 
-.cell-start {
-  background-color: #7373ff;
+.cell-start-end {
+  background-color: #9c7bff;
 }
 
-.cell-start:hover {
-  background-color: #7373ff;
+.cell-start-end:hover {
+  background-color: #9c7bff;
+}
+
+.cell-wall {
+  background-color: #3b3b3b;
+}
+
+.cell-wall:hover {
+  background-color: #3b3b3b;
 }
