@@ -1,10 +1,14 @@
-<div class="body-container">
+<div id="body-container">
   <table class="grid-container">
     <tr *ngFor="let row of cells; let idx_h = index" class="cell-row">
       <td *ngFor="let j of row; let idx_v = index"
-          (mousedown)="this.cells![idx_h][idx_v] = cellTypes.Selected"
-          [ngClass]="cells![idx_h][idx_v] === cellTypes.Selected ? 'cell-selected' : ''"
-           class="cell">
+          (mousedown)="this.canPaint = true"
+          (mouseup)="this.canPaint = false"
+          (mouseenter)="handleMouseAction(idx_h, idx_v)"
+          draggable="false"
+          class="cell">
+        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Selected" class="cell cell-selected"></div>
+        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Start" class="cell cell-start"></div>
       </td>
     </tr>
   </table>

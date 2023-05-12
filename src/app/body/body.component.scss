@@ -1,6 +1,6 @@
 $yellow-t : #ffd600;
 
-.body-container {
+#body-container {
   display: grid;
   justify-content: center;
   height: 100%;
@@ -40,4 +40,12 @@ $yellow-t : #ffd600;
 
 .cell-selected:hover {
   background-color: $yellow-t;
+}
+
+.cell-start {
+  background-color: #7373ff;
+}
+
+.cell-start:hover {
+  background-color: #7373ff;
 }

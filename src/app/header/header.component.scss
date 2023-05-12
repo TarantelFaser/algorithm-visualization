@@ -1,6 +1,6 @@
 $inner-padding: 10px;
 
-.header-container {
+#header-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -11,9 +11,23 @@ $inner-padding: 10px;
   justify-content: space-between;
 }
 
-.title-container {
+#action-container {
+  height: 100%;
+}
+
+#action-divider {
+  background-color: #494949;
+}
+
+.ver-container {
   display: flex;
   flex-direction: column;
+}
+
+.hor-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .title {
@@ -22,4 +36,8 @@ $inner-padding: 10px;
   font-weight: bolder;
   font-size: 18px;
   color: #ffd600;
+}
+
+.selected-action {
+  background-color: #ff9100;
 }

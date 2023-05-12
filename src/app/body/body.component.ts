@@ -1,14 +1,5 @@
 import {Component, ElementRef,} from '@angular/core';
-
-export enum cellTypes {
-  Unused ,
-  Start,
-  End,
-  Path,
-  Selected,
-  Highlighted,
-  Checked
-}
+import {cellTypes} from "../global/enums";
 
 @Component({
   selector: 'app-body',
@@ -17,8 +8,11 @@ export enum cellTypes {
 })
 
 export class BodyComponent{
+  protected readonly cellTypes = cellTypes;
   public cellSize : number | undefined;
   public cells : cellTypes[][]| undefined = [];
+
+  public canPaint = false;
 
   constructor(private el : ElementRef) {
   }
@@ -37,7 +31,12 @@ export class BodyComponent{
         this.cells![i].push(cellTypes.Unused);
       }
     }
+
+    this.cells![1][1] = this.cellTypes.Start;
   }
 
-  protected readonly cellTypes = cellTypes;
+  public handleMouseAction(idx_h: number, idx_v: number) {
+    if (!this.canPaint) return;
+    this.cells![idx_h][idx_v] === cellTypes.Unused ? this.cells![idx_h][idx_v] = cellTypes.Selected : this.cells![idx_h][idx_v] = cellTypes.Selected
+  }
 }

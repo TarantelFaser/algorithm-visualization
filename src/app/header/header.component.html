@@ -1,7 +1,32 @@
-<div class="header-container">
-  <div class="title-container">
+<div id="header-container">
+  <div class="ver-container">
     <p class="title">Algorithms</p>
     <p class="title">Visualizer</p>
   </div>
-  <button mat-raised-button class="yellow-button">test</button>
+  <div class="hor-container" id="action-container">
+    <button mat-raised-button
+            (click)="changeUseMode(useMode.PlaceStart)"
+            [ngClass]="userController.currentUseMode === useMode.PlaceStart ? 'selected-action' : ''"
+            matTooltip="place the starting point"
+            class="yellow-button">
+      <mat-icon>my_location</mat-icon>
+    </button>
+    <button mat-raised-button
+            (click)="changeUseMode(useMode.PlaceEnd)"
+            [ngClass]="userController.currentUseMode === useMode.PlaceEnd ? 'selected-action' : ''"
+            matTooltip="place the finishing point"
+            class="yellow-button">
+      <mat-icon>place</mat-icon>
+    </button>
+
+    <mat-divider vertical="true" id="action-divider"></mat-divider>
+
+    <button mat-raised-button
+            (click)="changeUseMode(useMode.PlaceWall)"
+            [ngClass]="userController.currentUseMode === useMode.PlaceWall ? 'selected-action' : ''"
+            matTooltip="place a wall"
+            class="yellow-button">
+      <mat-icon>error</mat-icon>
+    </button>
+  </div>
 </div>

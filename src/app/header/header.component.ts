@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {useMode} from "../global/enums";
+import {userController} from "../global/userController";
 
 @Component({
   selector: 'app-header',
@@ -12,4 +14,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  changeUseMode(mode : useMode) {
+    userController.currentUseMode = mode;
+  }
+
+  protected readonly useMode = useMode;
+  protected readonly userController = userController;
 }
