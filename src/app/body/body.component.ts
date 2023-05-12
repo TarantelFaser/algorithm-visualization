@@ -72,6 +72,9 @@ export class BodyComponent{
         break;
 
       case useMode.None:
+        let cell = this.cells[idx_h][idx_v];
+        if (cell == cellTypes.Start) this.placedStart = false;
+        if (cell == cellTypes.End) this.placedEnd = false;
         this.cells[idx_h][idx_v] = cellTypes.Unused;
         break;
     }
