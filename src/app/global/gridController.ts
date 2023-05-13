@@ -20,6 +20,7 @@ export class GridController {
   private static endCount = 0;
   private static startList:number[][] = [];
   private static endList:number[][] = [];
+  public static pathComplete = false;
 
   public static getCell(x:number, y:number) : cellTypes {
     if (!GridController.cells) throw new Error("Grid Error!");

@@ -3,6 +3,7 @@ import {cellTypes, useMode} from "../global/enums";
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Direction, GridController} from "../global/gridController";
 import {UserController} from "../global/userController";
+import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
 
 @Component({
   selector: 'app-body',
@@ -41,7 +42,7 @@ export class BodyComponent{
     this.startEndErrorBlocker = true;
   }
 
-  public handleMouseAction(idx_h: number, idx_v: number) {
+  public async handleMouseAction(idx_h: number, idx_v: number) {
     if (!this.isMouseDown) return;
     if (!GridController.getCellArray()) {
       throw new Error("Cells Array Error")
@@ -51,7 +52,7 @@ export class BodyComponent{
     switch (UserController.currentUseMode) {
       case useMode.PlaceStart:
         if (GridController.canPlaceStart()) {
-          GridController.setCell(idx_h,idx_v, cellTypes.Start);
+          GridController.setCell(idx_h, idx_v, cellTypes.Start);
         } else {
           if (this.startEndErrorBlocker) break;
           this.snackBar.open("Already placed a starting point!", "Ok", {duration: 3000})
@@ -60,7 +61,7 @@ export class BodyComponent{
 
       case useMode.PlaceEnd:
         if (GridController.canPlaceEnd()) {
-          GridController.setCell(idx_h,idx_v, cellTypes.End);
+          GridController.setCell(idx_h, idx_v, cellTypes.End);
         } else {
           if (this.startEndErrorBlocker) break;
           this.snackBar.open("Already placed a ending point!", "Ok", {duration: 3000})
@@ -68,12 +69,23 @@ export class BodyComponent{
         break;
 
       case useMode.PlaceWall:
-        GridController.setCell(idx_h,idx_v, cellTypes.Wall);
+        await this.placeWall(idx_h, idx_v);
         break;
 
       case useMode.None:
         GridController.setCell(idx_h, idx_v, cellTypes.Unused);
         break;
+    }
+  }
+
+  private async placeWall(x:number, y:number) {
+    GridController.setCell(x, y, cellTypes.Wall);
+
+    if (GridController.pathComplete) {
+      BreadthFirstSearchController.showAnimations = false;
+      let start = GridController.getStartList()[0]
+      await BreadthFirstSearchController.bfs(start[0], start[1]);
+      BreadthFirstSearchController.showAnimations = true;
     }
   }
 

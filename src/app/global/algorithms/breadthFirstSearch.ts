@@ -4,8 +4,10 @@ import {cellTypes} from "../enums";
 import {UserController} from "../userController";
 
 export class BreadthFirstSearchController {
+  public static showAnimations = true;
 
   public static async bfs(x: number, y: number) {
+    GridController.pathComplete = false;
     GridController.removeAllHighlightsPaths();
 
     console.log("STARTING BFS")
@@ -40,7 +42,7 @@ export class BreadthFirstSearchController {
         }
       });
 
-      if (iterationCounter % UserController.animationSpeed === 0) {
+      if (BreadthFirstSearchController.showAnimations && iterationCounter % UserController.animationSpeed === 0) {
         await new Promise(f => setTimeout(f, 1));
       }
     }
@@ -58,10 +60,12 @@ export class BreadthFirstSearchController {
       let y = nextCell[1];
       nextCell = BreadthFirstSearchController.getNextCell(x,y);
 
-      if (queueCounter % UserController.animationSpeed === 0) {
+      if (BreadthFirstSearchController.showAnimations && queueCounter % UserController.animationSpeed === 0) {
         await new Promise(f => setTimeout(f, 1));
       }
     }
+
+    GridController.pathComplete = true;
   }
 
   private static getNextCell(x:number,y:number) {

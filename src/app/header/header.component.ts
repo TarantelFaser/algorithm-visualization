@@ -5,6 +5,8 @@ import {DeleteAllDialogComponent} from "./delete-all-dialog/delete-all-dialog.co
 import {GridController} from "../global/gridController";
 import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
 import {UserController} from "../global/userController";
+import {first} from "rxjs";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-header',
@@ -13,7 +15,8 @@ import {UserController} from "../global/userController";
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+              private snackBar : MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -42,6 +45,9 @@ export class HeaderComponent implements OnInit {
 
   BFS() {
     let firstStart = GridController.getStartList()[0];
+    if (!firstStart) {
+      this.snackBar.open("Please place a starting point first!", "Ok", {duration: 4000})
+    }
     BreadthFirstSearchController.bfs(firstStart[0], firstStart[1]);
   }
 }

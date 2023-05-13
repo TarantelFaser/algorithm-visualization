@@ -5,19 +5,22 @@
   </div>
   <div class="hor-container" id="action-container">
 
-    <mat-slider [(ngModel)]="UserController.animationSpeed"
-                value="1"
-                min="1"
-                max="15"
-                step="1">
-    </mat-slider>
-    <mat-label>{{UserController.animationSpeed}}</mat-label>
+    <div matTooltip="set the animation speed"
+         matTooltipShowDelay="500">
+      <mat-slider [(ngModel)]="UserController.animationSpeed"
+                  value="1"
+                  min="1"
+                  max="15"
+                  step="1">
+      </mat-slider>
+      <mat-label>{{UserController.animationSpeed}}</mat-label>
+    </div>
 
     <mat-divider vertical="true" class="action-divider"></mat-divider>
 
     <button mat-raised-button
             (click)="BFS()"
-            matTooltip="place the starting point"
+            matTooltip="run the Breadth-First-Search"
             [matTooltipShowDelay]="500"
             class="yellow-button">
       BFS
@@ -66,7 +69,7 @@
 
     <button mat-stroked-button
             (click)="openDeleteDialog()"
-            matTooltip="delete a tile"
+            matTooltip="delete the whole grid"
             [matTooltipShowDelay]="500"
             id="delete-all-button">
       <mat-icon>delete_forever</mat-icon>
