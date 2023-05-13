@@ -31,6 +31,11 @@ $yellow-t : #ffd600;
   height: 100%;
   width: 100%;
   border-radius: 2px;
+/*
+  animation: create;
+  animation-timing-function: ease;
+  animation-duration: 0.5s;
+ */
 }
 
 .inner-cell:hover {
@@ -47,15 +52,11 @@ $yellow-t : #ffd600;
   background-color: rgba(255, 214, 0, 0);
   border: 1px solid #000000;
   border-radius: 4px;
-  transition: 0.2s;
-  transform: scale(1.2);
+  //transition: 0.2s;
+  //transform: scale(1.2);
 }
 
 .cell-selected {
-  background-color: $yellow-t;
-}
-
-.cell-selected:hover {
   background-color: $yellow-t;
 }
 
@@ -63,15 +64,7 @@ $yellow-t : #ffd600;
   background-color: #9c7bff;
 }
 
-.cell-start-end:hover {
-  background-color: #9c7bff;
-}
-
 .cell-wall {
-  background-color: #3b3b3b;
-}
-
-.cell-wall:hover {
   background-color: #3b3b3b;
 }
 
@@ -79,8 +72,8 @@ $yellow-t : #ffd600;
   background-color: aquamarine;
 }
 
-.cell-highlighted:hover {
-  background-color: aquamarine;
+.cell-path {
+  background-color: #3f51b5;
 }
 
 @keyframes create {

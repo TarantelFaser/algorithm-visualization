@@ -1,7 +1,7 @@
 import {Component, ElementRef,} from '@angular/core';
 import {cellTypes, useMode} from "../global/enums";
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {GridController} from "../global/gridController";
+import {Direction, GridController} from "../global/gridController";
 import {UserController} from "../global/userController";
 
 @Component({
@@ -79,4 +79,5 @@ export class BodyComponent{
 
   protected readonly cellTypes = cellTypes;
   protected readonly GridController = GridController;
+  protected readonly Direction = Direction;
 }

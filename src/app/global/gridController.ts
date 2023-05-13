@@ -1,7 +1,21 @@
 import {cellTypes} from "./enums";
+import {Dir} from "@angular/cdk/bidi";
+
+export enum Direction {
+  None,
+  Up,
+  Down,
+  Left,
+  Right
+}
+
 
 export class GridController {
+
+  //arrays used for visualization / animations and path construction
   private static cells : cellTypes[][]| undefined = [];
+  private static cellAge : number[][] = [];
+  private static path : Direction[][] = []
   private static startCount = 0;
   private static endCount = 0;
   private static startList:number[][] = [];
@@ -48,16 +62,33 @@ export class GridController {
     GridController.cells = array;
   }
 
+  public static setCellAgeArray(array : number[][]) {
+    GridController.cellAge = array;
+  }
+
+  public static setDirArray(array : Direction[][]) {
+    GridController.path = array;
+  }
+
   public static setAllCells(type : cellTypes, width= GridController.cells![0].length, height = GridController.cells!.length) {
     if (!GridController.cells) throw new Error("Grid Error!");
     let newCellArray : cellTypes[][] = [];
+    let newCellAgeArray : number[][] = [];
+    let newDirArray : Direction[][] = [];
     for (let i = 0; i < height; i++) {
-      newCellArray.push([])
+      newCellArray.push([]);
+      newCellAgeArray.push([]);
+      newDirArray.push([]);
       for (let j = 0; j < width; j++) {
         newCellArray[i].push(type);
+        newCellAgeArray[i].push(0);
+        newDirArray[i].push(Direction.None);
       }
     }
     GridController.setCellArray(newCellArray);
+    GridController.setCellAgeArray(newCellAgeArray);
+    GridController.setDirArray(newDirArray);
+
     GridController.startList = [];
     GridController.endList = [];
     GridController.startCount = 0;
@@ -90,5 +121,25 @@ export class GridController {
         }
       }
     }
+  }
+
+  public static getCellAge(x:number, y:number) {
+    return GridController.cellAge[y][x];
+  }
+
+  public static setCellAge(x:number, y:number, age:number) {
+    GridController.cellAge[y][x] = age;
+  }
+
+  public static setCellAgeRelative(x:number, y:number, relative:number) {
+    GridController.cellAge[y][x] += relative;
+  }
+
+  public static getCellDir(x:number, y:number) {
+    return GridController.path[y][x];
+  }
+
+  public static setCelLDir(x:number, y:number, dir:Direction) {
+    GridController.path[y][x] = dir;
   }
 }
