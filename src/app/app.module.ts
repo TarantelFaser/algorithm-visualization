@@ -13,12 +13,15 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatDividerModule} from "@angular/material/divider";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DeleteAllDialogComponent } from './header/delete-all-dialog/delete-all-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     BodyComponent,
+    DeleteAllDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTooltipModule,
     DragDropModule,
     MatDividerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

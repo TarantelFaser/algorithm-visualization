@@ -26,19 +26,10 @@ export class BodyComponent{
   private createGrid() {
     let width = this.el.nativeElement!.clientWidth;
     let height = this.el.nativeElement!.clientHeight;
-
     let cellSize = 23;
     let maxCellCountHorizontal : number = Math.round((width - 0.01*width) / cellSize);
     let maxCellCountVertical : number = Math.round((height - 0.01*height) / cellSize);
-
-    let cellArray : cellTypes[][] = []
-    for (let i = 0; i < maxCellCountVertical; i++) {
-      cellArray.push([])
-      for (let j = 0; j < maxCellCountHorizontal; j++) {
-        cellArray[i].push(cellTypes.Unused);
-      }
-    }
-    GridController.setCellArray(cellArray);
+    GridController.setAllCells(cellTypes.Unused, maxCellCountHorizontal, maxCellCountVertical)
   }
 
   //makes painting one cell easier

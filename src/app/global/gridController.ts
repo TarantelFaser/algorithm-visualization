@@ -35,6 +35,18 @@ export class GridController {
     GridController.cells = array;
   }
 
+  public static setAllCells(type : cellTypes, width = GridController.cells![0].length, height = GridController.cells!.length) {
+    if (!GridController.cells) throw new Error("Grid Error!");
+    let newCellArray : cellTypes[][] = [];
+    for (let i = 0; i < height; i++) {
+      newCellArray.push([])
+      for (let j = 0; j < width; j++) {
+        newCellArray[i].push(type);
+      }
+    }
+    GridController.setCellArray(newCellArray);
+  }
+
   public static canPlaceStart() {
     return GridController.startCount === 0;
   }

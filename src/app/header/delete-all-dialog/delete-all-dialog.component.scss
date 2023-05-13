@@ -1,0 +1,41 @@
+#dialog-container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#dialog-text {
+  font-size: 17px;
+  color: white;
+}
+
+#action-container {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#abort {
+  color: white;
+  font-weight: lighter;
+  transition: 0.5s;
+}
+
+#abort:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+}
+
+#confirm {
+  background-color: #ff533a;
+  transition: 0.5s;
+}
+
+#confirm:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+}
