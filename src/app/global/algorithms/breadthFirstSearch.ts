@@ -1,15 +1,20 @@
 import {Queue} from "../Queue";
 import {GridController} from "../gridController";
 import {cellTypes} from "../enums";
+import {UserController} from "../userController";
 
 export class BreadthFirstSearchController {
 
   public static async bfs(x: number, y: number) {
+    GridController.removeAllHighlightsPaths();
+
     console.log("STARTING BFS")
     let queue: Queue<number[]> = new Queue()
     queue.enqueue([x, y])
 
+    let queueCounter = 0;
     while (!queue.isEmpty()) {
+      queueCounter++;
       let coords = queue.dequeue();
       if (!coords) break;
       x = coords[0];
@@ -28,7 +33,9 @@ export class BreadthFirstSearchController {
         }
       }
 
-      await new Promise(f => setTimeout(f, 1));
+      if (queueCounter % UserController.animationSpeed === 0) {
+        await new Promise(f => setTimeout(f, 1));
+      }
     }
   }
 }

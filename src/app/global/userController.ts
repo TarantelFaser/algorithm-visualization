@@ -1,5 +1,6 @@
 import {useMode} from "./enums";
 
-export class userController {
+export class UserController {
   public static currentUseMode : useMode = useMode.None;
+  public static animationSpeed : number = 1;
 }

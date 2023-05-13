@@ -82,3 +82,8 @@ $yellow-t : #ffd600;
 .cell-highlighted:hover {
   background-color: aquamarine;
 }
+
+@keyframes create {
+  0% { transform: scale(0)}
+  100% {transform: scale(1)}
+}

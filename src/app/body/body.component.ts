@@ -1,8 +1,8 @@
 import {Component, ElementRef,} from '@angular/core';
 import {cellTypes, useMode} from "../global/enums";
-import {userController} from "../global/userController";
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {GridController} from "../global/gridController";
+import {UserController} from "../global/userController";
 
 @Component({
   selector: 'app-body',
@@ -48,7 +48,7 @@ export class BodyComponent{
     }
 
     //depending on current tool selected, edit the grid
-    switch (userController.currentUseMode) {
+    switch (UserController.currentUseMode) {
       case useMode.PlaceStart:
         if (GridController.canPlaceStart()) {
           GridController.setCell(idx_h,idx_v, cellTypes.Start);

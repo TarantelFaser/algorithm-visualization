@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {cellTypes, useMode} from "../global/enums";
-import {userController} from "../global/userController";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteAllDialogComponent} from "./delete-all-dialog/delete-all-dialog.component";
 import {GridController} from "../global/gridController";
 import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
+import {UserController} from "../global/userController";
 
 @Component({
   selector: 'app-header',
@@ -19,11 +19,11 @@ export class HeaderComponent implements OnInit {
   }
 
   changeUseMode(mode : useMode) {
-    userController.currentUseMode = mode;
+    UserController.currentUseMode = mode;
   }
 
   protected readonly useMode = useMode;
-  protected readonly userController = userController;
+  protected readonly UserController = UserController;
 
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteAllDialogComponent, {

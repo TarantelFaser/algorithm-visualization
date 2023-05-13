@@ -78,4 +78,17 @@ export class GridController {
   public static getEndList() {
     return GridController.endList;
   }
+
+  public static removeAllHighlightsPaths() {
+    let width= GridController.cells![0].length;
+    let height = GridController.cells!.length
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) {
+        let cell = GridController.getCell(j,i);
+        if (cell === cellTypes.Highlighted || cell === cellTypes.Path) {
+          GridController.setCell(j,i,cellTypes.Unused);
+        }
+      }
+    }
+  }
 }

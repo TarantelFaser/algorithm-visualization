@@ -15,6 +15,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DeleteAllDialogComponent } from './header/delete-all-dialog/delete-all-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     DragDropModule,
     MatDividerModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
