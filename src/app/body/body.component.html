@@ -1,7 +1,7 @@
 <div id="body-container">
   <table class="grid-container">
-    <tr *ngFor="let row of GridController.getCellArray(); let idx_h = index" class="cell-row">
-      <td *ngFor="let j of row; let idx_v = index"
+    <tr *ngFor="let row of GridController.getCellArray(); let idx_v = index" class="cell-row">
+      <td *ngFor="let j of row; let idx_h = index"
           (mousedown)="mouseDown(idx_h, idx_v)"
           (mouseup)="this.isMouseDown = false"
           (mouseenter)="handleMouseAction(idx_h, idx_v)"
@@ -15,6 +15,7 @@
           <mat-icon>place</mat-icon>
         </div>
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Wall)" class="inner-cell cell-wall"></div>
+        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Highlighted)" class="inner-cell cell-highlighted"></div>
       </td>
     </tr>
   </table>

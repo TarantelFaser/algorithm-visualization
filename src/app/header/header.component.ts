@@ -4,6 +4,7 @@ import {userController} from "../global/userController";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteAllDialogComponent} from "./delete-all-dialog/delete-all-dialog.component";
 import {GridController} from "../global/gridController";
+import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
 
 @Component({
   selector: 'app-header',
@@ -34,5 +35,13 @@ export class HeaderComponent implements OnInit {
         GridController.setAllCells(cellTypes.Unused);
       }
     });
+  }
+
+  protected readonly GridController = GridController;
+  protected readonly BreadthFirstSearchController = BreadthFirstSearchController;
+
+  BFS() {
+    let firstStart = GridController.getStartList()[0];
+    BreadthFirstSearchController.bfs(firstStart[0], firstStart[1]);
   }
 }

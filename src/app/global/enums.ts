@@ -5,7 +5,8 @@ export enum cellTypes {
   Path,
   Selected,
   Highlighted,
-  Wall
+  Wall,
+  Null
 }
 
 export enum useMode {

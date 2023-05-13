@@ -5,6 +5,16 @@
   </div>
   <div class="hor-container" id="action-container">
     <button mat-raised-button
+            (click)="BFS()"
+            matTooltip="place the starting point"
+            [matTooltipShowDelay]="500"
+            class="yellow-button">
+      BFS
+    </button>
+
+    <mat-divider vertical="true" class="action-divider"></mat-divider>
+
+    <button mat-raised-button
             (click)="changeUseMode(useMode.PlaceStart)"
             [ngClass]="userController.currentUseMode === useMode.PlaceStart ? 'selected-action' : ''"
             matTooltip="place the starting point"
