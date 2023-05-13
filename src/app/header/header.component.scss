@@ -15,6 +15,22 @@ $inner-padding: 10px;
   height: 100%;
 }
 
+#action-container > button {
+  transition: 0.5s;
+}
+
+@keyframes actionHover {
+  0% { transform: scale(1)}
+  50% { transform: scale(1.1)}
+  100% { transform: scale(1)}
+}
+
+button:hover {
+  animation-name: actionHover;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
+
 #delete-all-button {
   color: #ff2300;
 }
@@ -43,5 +59,6 @@ $inner-padding: 10px;
 }
 
 .selected-action {
-  background-color: #ff9100;
+  background: rgb(255,136,0);
+  background: linear-gradient(45deg, rgba(255,136,0,1) 29%, rgba(255,192,0,1) 100%);
 }
