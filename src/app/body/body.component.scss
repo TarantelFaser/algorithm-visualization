@@ -56,6 +56,11 @@ $yellow-t : #ffd600;
   //transform: scale(1.2);
 }
 
+.direction-container > mat-icon {
+  font-size: 21px;
+  color: #1a1a1a;
+}
+
 .cell-selected {
   background-color: $yellow-t;
 }

@@ -16,7 +16,7 @@
         </div>
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Wall)" class="inner-cell cell-wall"></div>
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Highlighted)" class="inner-cell cell-highlighted">
-          <div *ngIf="true" style="height: 100%; width: 100%; color: black">
+          <div *ngIf="true" class="direction-container">
             <mat-icon *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Left">keyboard_arrow_left</mat-icon>
             <mat-icon *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Right">keyboard_arrow_right</mat-icon>
             <mat-icon *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Up">keyboard_arrow_up</mat-icon>
