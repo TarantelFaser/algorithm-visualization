@@ -12,8 +12,6 @@ import {GridController} from "../global/gridController";
 
 export class BodyComponent{
   public isMouseDown = false;
-  private placedStart = false;
-  private placedEnd = false;
   private startEndErrorBlocker = false; //disable the error message if just placing a starting/ending point
 
   constructor(private el : ElementRef,
@@ -60,9 +58,8 @@ export class BodyComponent{
     //depending on current tool selected, edit the grid
     switch (userController.currentUseMode) {
       case useMode.PlaceStart:
-        if (!this.placedStart) {
+        if (GridController.canPlaceStart()) {
           GridController.setCell(idx_h,idx_v, cellTypes.Start);
-          this.placedStart = true;
         } else {
           if (this.startEndErrorBlocker) break;
           this.snackBar.open("Already placed a starting point!", "Ok", {duration: 3000})
@@ -70,9 +67,8 @@ export class BodyComponent{
         break;
 
       case useMode.PlaceEnd:
-        if (!this.placedEnd) {
+        if (GridController.canPlaceEnd()) {
           GridController.setCell(idx_h,idx_v, cellTypes.End);
-          this.placedEnd = true;
         } else {
           if (this.startEndErrorBlocker) break;
           this.snackBar.open("Already placed a ending point!", "Ok", {duration: 3000})
@@ -84,8 +80,6 @@ export class BodyComponent{
         break;
 
       case useMode.None:
-        if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start)) this.placedStart = false;
-        if (GridController.cellEquals(idx_h, idx_v, cellTypes.End)) this.placedEnd = false;
         GridController.setCell(idx_h, idx_v, cellTypes.Unused);
         break;
     }
