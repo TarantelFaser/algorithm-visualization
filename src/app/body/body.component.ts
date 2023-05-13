@@ -2,6 +2,7 @@ import {Component, ElementRef,} from '@angular/core';
 import {cellTypes, useMode} from "../global/enums";
 import {userController} from "../global/userController";
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {GridController} from "../global/gridController";
 
 @Component({
   selector: 'app-body',
@@ -10,7 +11,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 
 export class BodyComponent{
-  public cells : cellTypes[][]| undefined = [];
   public isMouseDown = false;
   private placedStart = false;
   private placedEnd = false;
@@ -28,9 +28,9 @@ export class BodyComponent{
     let maxCellCountVertical : number = Math.round((height - 0.01*height) / cellSize);
 
     for (let i = 0; i < maxCellCountVertical; i++) {
-      this.cells!.push([])
+      GridController.cells!.push([])
       for (let j = 0; j < maxCellCountHorizontal; j++) {
-        this.cells![i].push(cellTypes.Unused);
+        GridController.cells![i].push(cellTypes.Unused);
       }
     }
   }
@@ -44,14 +44,14 @@ export class BodyComponent{
   public handleMouseAction(idx_h: number, idx_v: number) {
     if (!this.isMouseDown) return;
 
-    if (!this.cells) {
+    if (!GridController.cells) {
       throw new Error("Cells Array Error")
     }
 
     switch (userController.currentUseMode) {
       case useMode.PlaceStart:
         if (!this.placedStart) {
-          this.cells[idx_h][idx_v] = cellTypes.Start;
+          GridController.cells[idx_h][idx_v] = cellTypes.Start;
           this.placedStart = true;
         } else {
           this.snackBar.open("Already placed a starting point!", "Ok", {duration: 3000})
@@ -60,7 +60,7 @@ export class BodyComponent{
 
       case useMode.PlaceEnd:
         if (!this.placedEnd) {
-          this.cells[idx_h][idx_v] = cellTypes.End;
+          GridController.cells[idx_h][idx_v] = cellTypes.End;
           this.placedEnd = true;
         } else {
           this.snackBar.open("Already placed a ending point!", "Ok", {duration: 3000})
@@ -68,17 +68,18 @@ export class BodyComponent{
         break;
 
       case useMode.PlaceWall:
-        this.cells[idx_h][idx_v] = cellTypes.Wall;
+        GridController.cells[idx_h][idx_v] = cellTypes.Wall;
         break;
 
       case useMode.None:
-        let cell = this.cells[idx_h][idx_v];
+        let cell = GridController.cells[idx_h][idx_v];
         if (cell == cellTypes.Start) this.placedStart = false;
         if (cell == cellTypes.End) this.placedEnd = false;
-        this.cells[idx_h][idx_v] = cellTypes.Unused;
+        GridController.cells[idx_h][idx_v] = cellTypes.Unused;
         break;
     }
   }
 
   protected readonly cellTypes = cellTypes;
+  protected readonly GridController = GridController;
 }

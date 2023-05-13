@@ -1,20 +1,20 @@
 <div id="body-container">
   <table class="grid-container">
-    <tr *ngFor="let row of cells; let idx_h = index" class="cell-row">
+    <tr *ngFor="let row of GridController.cells; let idx_h = index" class="cell-row">
       <td *ngFor="let j of row; let idx_v = index"
           (mousedown)="mouseDown(idx_h, idx_v)"
           (mouseup)="this.isMouseDown = false"
           (mouseenter)="handleMouseAction(idx_h, idx_v)"
           draggable="false"
           class="cell">
-        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Selected" class="inner-cell cell-selected"></div>
-        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Start" class="inner-cell cell-start-end">
+        <div *ngIf="GridController.cells![idx_h][idx_v] === cellTypes.Selected" class="inner-cell cell-selected"></div>
+        <div *ngIf="GridController.cells![idx_h][idx_v] === cellTypes.Start" class="inner-cell cell-start-end">
           <mat-icon>my_location</mat-icon>
         </div>
-        <div *ngIf="cells![idx_h][idx_v] === cellTypes.End" class="inner-cell cell-start-end">
+        <div *ngIf="GridController.cells![idx_h][idx_v] === cellTypes.End" class="inner-cell cell-start-end">
           <mat-icon>place</mat-icon>
         </div>
-        <div *ngIf="cells![idx_h][idx_v] === cellTypes.Wall" class="inner-cell cell-wall"></div>
+        <div *ngIf="GridController.cells![idx_h][idx_v] === cellTypes.Wall" class="inner-cell cell-wall"></div>
       </td>
     </tr>
   </table>
