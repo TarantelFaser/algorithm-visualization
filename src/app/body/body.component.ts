@@ -27,12 +27,14 @@ export class BodyComponent{
     let maxCellCountHorizontal : number = Math.round((width - 0.01*width) / cellSize);
     let maxCellCountVertical : number = Math.round((height - 0.01*height) / cellSize);
 
+    let cellArray : cellTypes[][] = []
     for (let i = 0; i < maxCellCountVertical; i++) {
-      GridController.cells!.push([])
+      cellArray.push([])
       for (let j = 0; j < maxCellCountHorizontal; j++) {
-        GridController.cells![i].push(cellTypes.Unused);
+        cellArray[i].push(cellTypes.Unused);
       }
     }
+    GridController.setCellArray(cellArray);
   }
 
   //makes painting one cell easier
@@ -44,14 +46,14 @@ export class BodyComponent{
   public handleMouseAction(idx_h: number, idx_v: number) {
     if (!this.isMouseDown) return;
 
-    if (!GridController.cells) {
+    if (!GridController.getCellArray()) {
       throw new Error("Cells Array Error")
     }
 
     switch (userController.currentUseMode) {
       case useMode.PlaceStart:
         if (!this.placedStart) {
-          GridController.cells[idx_h][idx_v] = cellTypes.Start;
+          GridController.setCell(idx_h,idx_v, cellTypes.Start);
           this.placedStart = true;
         } else {
           this.snackBar.open("Already placed a starting point!", "Ok", {duration: 3000})
@@ -60,7 +62,7 @@ export class BodyComponent{
 
       case useMode.PlaceEnd:
         if (!this.placedEnd) {
-          GridController.cells[idx_h][idx_v] = cellTypes.End;
+          GridController.setCell(idx_h,idx_v, cellTypes.End);
           this.placedEnd = true;
         } else {
           this.snackBar.open("Already placed a ending point!", "Ok", {duration: 3000})
@@ -68,14 +70,13 @@ export class BodyComponent{
         break;
 
       case useMode.PlaceWall:
-        GridController.cells[idx_h][idx_v] = cellTypes.Wall;
+        GridController.setCell(idx_h,idx_v, cellTypes.Wall);
         break;
 
       case useMode.None:
-        let cell = GridController.cells[idx_h][idx_v];
-        if (cell == cellTypes.Start) this.placedStart = false;
-        if (cell == cellTypes.End) this.placedEnd = false;
-        GridController.cells[idx_h][idx_v] = cellTypes.Unused;
+        if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start)) this.placedStart = false;
+        if (GridController.cellEquals(idx_h, idx_v, cellTypes.End)) this.placedEnd = false;
+        GridController.setCell(idx_h, idx_v, cellTypes.Unused);
         break;
     }
   }
