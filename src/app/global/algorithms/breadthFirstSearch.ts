@@ -12,10 +12,10 @@ export class BreadthFirstSearchController {
     let queue: Queue<number[]> = new Queue()
     queue.enqueue([x, y])
 
-    let queueCounter = 0;
+    let iterationCounter = 0;
     let foundEnd = false;
     while (!queue.isEmpty() && !foundEnd) {
-      queueCounter++;
+      iterationCounter++;
       let coords = queue.dequeue();
       if (!coords) break;
 
@@ -23,11 +23,10 @@ export class BreadthFirstSearchController {
       x = coords[0];
       y = coords[1];
       const dir = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]];
-      const directions : Direction[] = [Direction.Left, Direction.Right, Direction.Down, Direction.Up];
+      const directions : Direction[] = [Direction.Left, Direction.Right, Direction.Up,  Direction.Down];
 
       //check neighboring cells and enqueue if valid
       dir.forEach((ar, index) => {
-        index = (index + 1) % 4 //index is somehow broken
         let cell = GridController.getCell(ar[0], ar[1]);
         if (cell === cellTypes.End) {
           foundEnd = true; //stop the exploration
@@ -37,10 +36,11 @@ export class BreadthFirstSearchController {
           queue.enqueue(ar);
           GridController.setCelLDir(ar[0], ar[1], directions[index]);
           GridController.setCell(ar[0], ar[1], cellTypes.Highlighted)
+          GridController.setCellAge(ar[0], ar[1], iterationCounter);
         }
       });
 
-      if (queueCounter % UserController.animationSpeed === 0) {
+      if (iterationCounter % UserController.animationSpeed === 0) {
         await new Promise(f => setTimeout(f, 1));
       }
     }
@@ -48,32 +48,41 @@ export class BreadthFirstSearchController {
 
   private static async constructPath(end_x: number, end_y: number) {
     let nextCell = [end_x, end_y];
-    console.log("starting path construction: " + nextCell[0] + " | " + nextCell[1] + "\t" + GridController.getCellDir(nextCell[0], nextCell[1]).toString())
+    nextCell = BreadthFirstSearchController.getNextCell(nextCell[0],nextCell[1]);
+
     let queueCounter = 0;
     while (!GridController.cellEquals(nextCell[0], nextCell[1], cellTypes.Start)) {
+      GridController.setCell(nextCell[0], nextCell[1], cellTypes.Path);
       queueCounter++;
       let x = nextCell[0];
       let y = nextCell[1];
-      switch (GridController.getCellDir(x, y)) {
-        case Direction.Up:
-          nextCell = [x, y - 1];
-          break;
-        case Direction.Down:
-          nextCell = [x, y + 1];
-          break;
-        case Direction.Left:
-          nextCell = [x - 1, y];
-          break;
-        case Direction.Right:
-          nextCell = [x + 1, y];
-          break;
-      }
-
-      GridController.setCell(nextCell[0], nextCell[1], cellTypes.Path);
+      nextCell = BreadthFirstSearchController.getNextCell(x,y);
 
       if (queueCounter % UserController.animationSpeed === 0) {
         await new Promise(f => setTimeout(f, 1));
       }
     }
+  }
+
+  private static getNextCell(x:number,y:number) {
+    let nextCell;
+    switch (GridController.getCellDir(x, y)) {
+      case Direction.Up:
+        nextCell = [x, y - 1];
+        break;
+      case Direction.Down:
+        nextCell = [x, y + 1];
+        break;
+      case Direction.Left:
+        nextCell = [x - 1, y];
+        break;
+      case Direction.Right:
+        nextCell = [x + 1, y];
+        break;
+      default:
+        nextCell = [x,y];
+        break;
+    }
+    return nextCell;
   }
 }

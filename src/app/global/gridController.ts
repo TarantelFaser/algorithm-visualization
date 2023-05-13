@@ -118,6 +118,8 @@ export class GridController {
         let cell = GridController.getCell(j,i);
         if (cell === cellTypes.Highlighted || cell === cellTypes.Path) {
           GridController.setCell(j,i,cellTypes.Unused);
+          GridController.setCelLDir(j,i, Direction.None);
+          GridController.setCellAge(j,i, 0);
         }
       }
     }
