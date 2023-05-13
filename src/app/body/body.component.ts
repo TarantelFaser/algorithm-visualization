@@ -14,12 +14,18 @@ export class BodyComponent{
   public isMouseDown = false;
   private placedStart = false;
   private placedEnd = false;
+  private startEndErrorBlocker = false; //disable the error message if just placing a starting/ending point
 
   constructor(private el : ElementRef,
               private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
+    this.createGrid();
+  }
+
+  //calculate number of grid cells, depending on the windows size
+  private createGrid() {
     let width = this.el.nativeElement!.clientWidth;
     let height = this.el.nativeElement!.clientHeight;
 
@@ -40,22 +46,25 @@ export class BodyComponent{
   //makes painting one cell easier
   public mouseDown(idx_h: number, idx_v: number) {
     this.isMouseDown = true;
+    this.startEndErrorBlocker = false;
     this.handleMouseAction(idx_h, idx_v);
+    this.startEndErrorBlocker = true;
   }
 
   public handleMouseAction(idx_h: number, idx_v: number) {
     if (!this.isMouseDown) return;
-
     if (!GridController.getCellArray()) {
       throw new Error("Cells Array Error")
     }
 
+    //depending on current tool selected, edit the grid
     switch (userController.currentUseMode) {
       case useMode.PlaceStart:
         if (!this.placedStart) {
           GridController.setCell(idx_h,idx_v, cellTypes.Start);
           this.placedStart = true;
         } else {
+          if (this.startEndErrorBlocker) break;
           this.snackBar.open("Already placed a starting point!", "Ok", {duration: 3000})
         }
         break;
@@ -65,6 +74,7 @@ export class BodyComponent{
           GridController.setCell(idx_h,idx_v, cellTypes.End);
           this.placedEnd = true;
         } else {
+          if (this.startEndErrorBlocker) break;
           this.snackBar.open("Already placed a ending point!", "Ok", {duration: 3000})
         }
         break;
