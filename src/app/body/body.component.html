@@ -23,10 +23,10 @@
 
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Highlighted)" class="inner-cell cell-highlighted">
           <div *ngIf="true" class="direction-container">
-            <mat-icon *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Left">keyboard_arrow_left</mat-icon>
-            <mat-icon *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Right">keyboard_arrow_right</mat-icon>
-            <mat-icon *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Up">keyboard_arrow_up</mat-icon>
-            <mat-icon *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Down">keyboard_arrow_down</mat-icon>
+            <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Left">keyboard_arrow_left</mat-icon>
+            <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Right">keyboard_arrow_right</mat-icon>
+            <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Up">keyboard_arrow_up</mat-icon>
+            <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Down">keyboard_arrow_down</mat-icon>
           </div>
           <div *ngIf="false">
             <p>{{GridController.getCellAge(idx_h, idx_v)}}</p>

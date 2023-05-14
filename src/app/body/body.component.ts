@@ -52,7 +52,7 @@ export class BodyComponent{
     switch (UserController.currentUseMode) {
       case useMode.PlaceStart:
         if (GridController.canPlaceStart()) {
-          GridController.setCell(idx_h, idx_v, cellTypes.Start);
+          await this.placeCell(idx_h, idx_v, cellTypes.Start);
         } else {
           if (this.startEndErrorBlocker) break;
           this.snackBar.open("Already placed a starting point!", "Ok", {duration: 3000})
@@ -61,7 +61,7 @@ export class BodyComponent{
 
       case useMode.PlaceEnd:
         if (GridController.canPlaceEnd()) {
-          GridController.setCell(idx_h, idx_v, cellTypes.End);
+          await this.placeCell(idx_h, idx_v, cellTypes.End);
         } else {
           if (this.startEndErrorBlocker) break;
           this.snackBar.open("Already placed a ending point!", "Ok", {duration: 3000})
@@ -69,19 +69,23 @@ export class BodyComponent{
         break;
 
       case useMode.PlaceWall:
-        await this.placeWall(idx_h, idx_v);
+        await this.placeCell(idx_h, idx_v, cellTypes.Wall);
         break;
 
       case useMode.None:
-        GridController.setCell(idx_h, idx_v, cellTypes.Unused);
+        await this.placeCell(idx_h, idx_v, cellTypes.Unused);
         break;
     }
   }
 
-  private async placeWall(x:number, y:number) {
-    GridController.setCell(x, y, cellTypes.Wall);
-
-    if (GridController.pathComplete) {
+  //if algorithm is done, dynamically update path depending on new cells placed
+  private async placeCell(x:number, y:number, type:cellTypes) {
+    //if the start is changed, dont try to run the algorithm
+    if (GridController.cellEquals(x,y, cellTypes.Start)) {
+      GridController.removeAllHighlightsPaths();
+    }
+    GridController.setCell(x, y, type);
+    if (GridController.algorithmDone && GridController.getStartList().length > 0) {
       BreadthFirstSearchController.showAnimations = false;
       let start = GridController.getStartList()[0]
       await BreadthFirstSearchController.bfs(start[0], start[1]);

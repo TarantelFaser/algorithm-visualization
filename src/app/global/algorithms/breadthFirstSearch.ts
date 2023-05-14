@@ -7,7 +7,7 @@ export class BreadthFirstSearchController {
   public static showAnimations = true;
 
   public static async bfs(x: number, y: number) {
-    GridController.pathComplete = false;
+    GridController.algorithmDone = false;
     GridController.removeAllHighlightsPaths();
 
     console.log("STARTING BFS")
@@ -46,6 +46,7 @@ export class BreadthFirstSearchController {
         await new Promise(f => setTimeout(f, 1));
       }
     }
+    GridController.algorithmDone = true;
   }
 
   private static async constructPath(end_x: number, end_y: number) {
@@ -61,11 +62,11 @@ export class BreadthFirstSearchController {
       nextCell = BreadthFirstSearchController.getNextCell(x,y);
 
       if (BreadthFirstSearchController.showAnimations && queueCounter % UserController.animationSpeed === 0) {
-        await new Promise(f => setTimeout(f, 1));
+        await new Promise(f => setTimeout(f, 40));
       }
     }
 
-    GridController.pathComplete = true;
+    GridController.algorithmDone = true;
   }
 
   private static getNextCell(x:number,y:number) {

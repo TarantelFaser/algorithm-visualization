@@ -20,7 +20,7 @@ export class GridController {
   private static endCount = 0;
   private static startList:number[][] = [];
   private static endList:number[][] = [];
-  public static pathComplete = false;
+  public static algorithmDone = false;
 
   public static getCell(x:number, y:number) : cellTypes {
     if (!GridController.cells) throw new Error("Grid Error!");
@@ -34,8 +34,23 @@ export class GridController {
 
   public static setCell(x : number, y : number, type : cellTypes) : boolean {
     if (!GridController.cells) throw new Error("Grid Error!");
-    if (GridController.cellEquals(x, y, cellTypes.Start)) GridController.startCount--;
-    if (GridController.cellEquals(x, y, cellTypes.End)) GridController.endCount--;
+
+    if (GridController.cellEquals(x, y, cellTypes.Start)) {
+      GridController.startCount--;
+      //remove entry from list
+      let newList: number[][] = [];
+      GridController.startList.forEach((el) => {
+        if (el[0] !== x && el[1] !== y) newList.push(el)})
+      GridController.startList = newList;
+
+    } else if (GridController.cellEquals(x, y, cellTypes.End)) {
+      GridController.endCount--;
+      //remove entry from list
+      let newList: number[][] = [];
+      GridController.endList.forEach((el) => {
+        if (el[0] !== x && el[1] !== y) newList.push(el)})
+      GridController.endList = newList;
+    }
     if (type === cellTypes.Start) {
       GridController.startCount++;
       GridController.startList.push([x,y]);
