@@ -48,6 +48,8 @@ button:hover {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .title {
