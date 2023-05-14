@@ -1,5 +1,4 @@
 import {cellTypes} from "./enums";
-import {Dir} from "@angular/cdk/bidi";
 
 export enum Direction {
   None,
