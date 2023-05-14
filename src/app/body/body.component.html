@@ -6,15 +6,21 @@
           (mouseup)="this.isMouseDown = false"
           (mouseenter)="handleMouseAction(idx_h, idx_v)"
           draggable="false"
+          (dragstart)="onDragStart()"
           class="cell">
+
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Selected)" class="inner-cell cell-selected"></div>
+
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Start)" class="inner-cell cell-start-end">
           <mat-icon>my_location</mat-icon>
         </div>
+
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.End)" class="inner-cell cell-start-end">
           <mat-icon>place</mat-icon>
         </div>
+
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Wall)" class="inner-cell cell-wall"></div>
+
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Highlighted)" class="inner-cell cell-highlighted">
           <div *ngIf="true" class="direction-container">
             <mat-icon *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Left">keyboard_arrow_left</mat-icon>

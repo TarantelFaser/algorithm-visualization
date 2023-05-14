@@ -2,7 +2,7 @@
 
 - visualizes pathfinding / search algorithms
 - very cool
-- view GitHub Pages to test it out
+- view GitHub Pages to test it out (https://tarantelfaser.github.io/algorithm-visualization/)
 - made with Angular (using Angular Material)
 
 # How to use

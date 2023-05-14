@@ -89,6 +89,10 @@ export class BodyComponent{
     }
   }
 
+  public onDragStart() {
+    return false;
+  }
+
   protected readonly cellTypes = cellTypes;
   protected readonly GridController = GridController;
   protected readonly Direction = Direction;
