@@ -9,8 +9,6 @@ export class BreadthFirstSearchController {
   public static async bfs(x: number, y: number) {
     GridController.algorithmDone = false;
     GridController.removeAllHighlightsPaths();
-
-    console.log("STARTING BFS")
     let queue: Queue<number[]> = new Queue()
     queue.enqueue([x, y])
 

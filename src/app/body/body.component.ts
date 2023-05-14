@@ -30,7 +30,6 @@ export class BodyComponent{
     let cellSize = 23;
     let maxCellCountHorizontal : number = Math.round((width - 0.01*width) / cellSize);
     let maxCellCountVertical : number = Math.round((height - 0.01*height) / cellSize);
-    console.log("generating grid: " + maxCellCountHorizontal + " by " + maxCellCountVertical);
     GridController.setAllCells(cellTypes.Unused, maxCellCountHorizontal, maxCellCountVertical)
   }
 
