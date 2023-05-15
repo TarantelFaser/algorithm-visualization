@@ -5,7 +5,6 @@ import {DeleteAllDialogComponent} from "./delete-all-dialog/delete-all-dialog.co
 import {GridController} from "../global/gridController";
 import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
 import {UserController} from "../global/userController";
-import {first} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
@@ -15,8 +14,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog,
-              private snackBar : MatSnackBar) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
