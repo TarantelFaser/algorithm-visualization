@@ -9,6 +9,7 @@ Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app
 Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 Run `yarn deploy` to build the project. The build artifacts will be stored in the `docs/` directory, so that GitHub Pages finds the files.
+Might have to add `<meta http-equiv="Permissions-Policy" content="interest-cohort=()">` to the generated `index.html` file, for the site to work properly on GitHub Pages. 
 
 ## Tests
 Run `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).

@@ -21,6 +21,9 @@ export class GridController {
   private static endList:number[][] = [];
   public static algorithmDone = false;
 
+  public static width = 0;
+  public static height = 0;
+
   public static getCell(x:number, y:number) : cellTypes {
     if (!GridController.cells) throw new Error("Grid Error!");
     let maxHor = GridController.cells[0].length;

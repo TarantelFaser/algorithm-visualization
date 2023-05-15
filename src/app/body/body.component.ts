@@ -31,6 +31,8 @@ export class BodyComponent{
     let maxCellCountHorizontal : number = Math.round((width - 0.01*width) / cellSize);
     let maxCellCountVertical : number = Math.round((height - 0.01*height) / cellSize);
     GridController.setAllCells(cellTypes.Unused, maxCellCountHorizontal, maxCellCountVertical)
+    GridController.width = maxCellCountHorizontal;
+    GridController.height = maxCellCountVertical;
   }
 
   //makes painting one cell easier

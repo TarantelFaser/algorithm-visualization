@@ -1,37 +1,38 @@
 <div id="body-container">
-  <table class="grid-container" (mouseleave)="this.isMouseDown = false">
-    <tr *ngFor="let row of GridController.getCellArray(); let idx_v = index" class="cell-row">
-      <td *ngFor="let j of row; let idx_h = index"
+  <table class="grid-container prevent-select" (mouseleave)="this.isMouseDown = false">
+    <tr *ngFor="let row of [].constructor(GridController.height); let idx_v = index" class="cell-row">
+      <td *ngFor="let row of [].constructor(GridController.width); let idx_h = index"
           (mousedown)="mouseDown(idx_h, idx_v)"
           (mouseup)="this.isMouseDown = false"
           (mouseenter)="handleMouseAction(idx_h, idx_v)"
           draggable="false"
           (dragstart)="onDragStart()"
           class="cell">
-
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Selected)" class="inner-cell cell-selected"></div>
 
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Start)" class="inner-cell cell-start-end">
-          <mat-icon>my_location</mat-icon>
+          <mat-icon disabled="true">my_location</mat-icon>
         </div>
 
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.End)" class="inner-cell cell-start-end">
-          <mat-icon>place</mat-icon>
+          <mat-icon disabled="true">place</mat-icon>
         </div>
 
         <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Wall)" class="inner-cell cell-wall"></div>
 
-        <div class="inner-cell"
-             [ngClass]="GridController.cellEquals(idx_h,idx_v, cellTypes.Highlighted) ? 'cell-highlighted' : (GridController.cellEquals(idx_h,idx_v, cellTypes.Path) ? 'cell-path' : '')">
-          <div *ngIf="true" class="direction-container">
-            <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Left">keyboard_arrow_left</mat-icon>
-            <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Right">keyboard_arrow_right</mat-icon>
-            <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Up">keyboard_arrow_up</mat-icon>
-            <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Down">keyboard_arrow_down</mat-icon>
-          </div>
-          <div *ngIf="false">
-            <p>{{GridController.getCellAge(idx_h, idx_v)}}</p>
-          </div>
+        <div class="inner-cell cell-highlighted"
+             *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Highlighted)">
+          <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Left">keyboard_arrow_left</mat-icon>
+          <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Right">keyboard_arrow_right</mat-icon>
+          <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Up">keyboard_arrow_up</mat-icon>
+          <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Down">keyboard_arrow_down</mat-icon>
+        </div>
+        <div class="inner-cell cell-path"
+             *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Path)">
+          <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Left">keyboard_arrow_left</mat-icon>
+          <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Right">keyboard_arrow_right</mat-icon>
+          <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Up">keyboard_arrow_up</mat-icon>
+          <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Down">keyboard_arrow_down</mat-icon>
         </div>
       </td>
     </tr>
