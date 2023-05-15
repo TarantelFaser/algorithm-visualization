@@ -24,7 +24,8 @@ export class GridController {
   public static width = 0;
   public static height = 0;
 
-  public static stopAlgorithm = false;
+  public static algorithmCanRun = true;
+  public static showAnimations = true;
 
   public static getCell(x:number, y:number) : cellTypes {
     if (!GridController.cells) throw new Error("Grid Error!");

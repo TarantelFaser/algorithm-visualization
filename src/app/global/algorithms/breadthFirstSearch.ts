@@ -4,25 +4,28 @@ import {cellTypes} from "../enums";
 import {UserController} from "../userController";
 
 export class BreadthFirstSearchController {
-  public static showAnimations = true;
 
-  public static async bfs(x: number, y: number) {
+  public static async bfs() {
+    if (GridController.getStartList().length === 0) GridController.algorithmCanRun = false;
+    if (!GridController.algorithmCanRun) return;
+    let firstStart = GridController.getStartList()[0];
+    if (GridController.algorithmDone) GridController.removeAllHighlightsPaths();
     GridController.algorithmDone = false;
-    GridController.removeAllHighlightsPaths();
+
     let queue: Queue<number[]> = new Queue()
-    queue.enqueue([x, y])
+    queue.enqueue([firstStart[0], firstStart[1]]);
 
     let iterationCounter = 0;
     let foundEnd = false;
     while (!queue.isEmpty() && !foundEnd) {
-      if (GridController.stopAlgorithm) return;
+      if (!GridController.algorithmCanRun) return;
       iterationCounter++;
       let coords = queue.dequeue();
       if (!coords) break;
 
       //used for path construction, saves direction from ending to starting point
-      x = coords[0];
-      y = coords[1];
+      let x = coords[0];
+      let y = coords[1];
       const dir = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]];
       const directions : Direction[] = [Direction.Left, Direction.Right, Direction.Up,  Direction.Down];
       //check neighboring cells and enqueue if valid
@@ -41,7 +44,7 @@ export class BreadthFirstSearchController {
         }
       }
 
-      if (BreadthFirstSearchController.showAnimations && iterationCounter % UserController.animationSpeed === 0) {
+      if (GridController.showAnimations && iterationCounter % UserController.animationSpeed === 0) {
         await new Promise(f => setTimeout(f, 1));
       }
     }
@@ -51,7 +54,6 @@ export class BreadthFirstSearchController {
   private static async constructPath(end_x: number, end_y: number) {
     let nextCell = [end_x, end_y];
     nextCell = BreadthFirstSearchController.getNextCell(nextCell[0],nextCell[1]);
-
     let queueCounter = 0;
     while (!GridController.cellEquals(nextCell[0], nextCell[1], cellTypes.Start)) {
       GridController.setCell(nextCell[0], nextCell[1], cellTypes.Path);
@@ -60,7 +62,7 @@ export class BreadthFirstSearchController {
       let y = nextCell[1];
       nextCell = BreadthFirstSearchController.getNextCell(x,y);
 
-      if (BreadthFirstSearchController.showAnimations && queueCounter % UserController.animationSpeed === 0) {
+      if (GridController.showAnimations && queueCounter % UserController.animationSpeed === 0) {
         await new Promise(f => setTimeout(f, 40));
       }
     }
