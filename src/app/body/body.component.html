@@ -8,27 +8,28 @@
           draggable="false"
           (dragstart)="onDragStart()"
           class="cell">
-        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Selected)" class="inner-cell cell-selected"></div>
 
-        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Start)" class="inner-cell cell-start-end">
+        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Start)" class="inner-cell cell-start-end inner-cell-animation">
           <mat-icon disabled="true">my_location</mat-icon>
         </div>
 
-        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.End)" class="inner-cell cell-start-end">
+        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.End)" class="inner-cell cell-start-end inner-cell-animation">
           <mat-icon disabled="true">place</mat-icon>
         </div>
 
-        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Wall)" class="inner-cell cell-wall"></div>
+        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Wall)" class="inner-cell cell-wall inner-cell-animation"></div>
 
         <div class="inner-cell cell-highlighted"
-             *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Highlighted)">
+             *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Highlighted)"
+             [ngClass]="GridController.algorithmDone ? '' : 'inner-cell-animation'">
           <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Left">keyboard_arrow_left</mat-icon>
           <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Right">keyboard_arrow_right</mat-icon>
           <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Up">keyboard_arrow_up</mat-icon>
           <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Down">keyboard_arrow_down</mat-icon>
         </div>
         <div class="inner-cell cell-path"
-             *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Path)">
+             *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Path)"
+             [ngClass]="GridController.algorithmDone ? '' : 'inner-cell-animation'">
           <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Left">keyboard_arrow_left</mat-icon>
           <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Right">keyboard_arrow_right</mat-icon>
           <mat-icon disabled="true" *ngIf="GridController.getCellDir(idx_h, idx_v) === Direction.Up">keyboard_arrow_up</mat-icon>

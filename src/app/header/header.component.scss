@@ -1,3 +1,5 @@
+@import "src/colors.scss";
+
 $inner-padding: 10px;
 
 #header-container {
@@ -7,7 +9,7 @@ $inner-padding: 10px;
   height: calc(100% - 2*$inner-padding);
   padding: $inner-padding;
   border-radius: 10px;
-  background-color: #505050;
+  background-color: $gray-background;
   justify-content: space-between;
 }
 
@@ -36,7 +38,7 @@ button:hover {
 }
 
 .action-divider {
-  background-color: #494949;
+  background-color: $darker-gray-color;
 }
 
 .ver-container {
@@ -57,10 +59,10 @@ button:hover {
   font-family: Monaco, "Lucida Console", monospace;
   font-weight: bolder;
   font-size: 18px;
-  color: #ffd600;
+  color: $yellow-color;
 }
 
 .selected-action {
-  background: rgb(255,136,0);
-  background: linear-gradient(45deg, rgba(255,136,0,1) 29%, rgba(255,192,0,1) 100%);
+  background: $orange-color;
+  background: linear-gradient(45deg, $orange-color 29%, $yellow-color 100%);
 }

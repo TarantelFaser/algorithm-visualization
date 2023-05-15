@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         GridController.setAllCells(cellTypes.Unused);
+        GridController.stopAlgorithm = true;
       }
     });
   }
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit {
     if (!firstStart) {
       this.snackBar.open("Please place a starting point first!", "Ok", {duration: 4000})
     }
+    GridController.stopAlgorithm = false;
     BreadthFirstSearchController.bfs(firstStart[0], firstStart[1]);
   }
 }

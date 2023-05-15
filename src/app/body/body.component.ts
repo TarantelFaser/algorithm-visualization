@@ -101,4 +101,6 @@ export class BodyComponent{
   protected readonly cellTypes = cellTypes;
   protected readonly GridController = GridController;
   protected readonly Direction = Direction;
+  protected readonly BreadthFirstSearchController = BreadthFirstSearchController;
+  protected readonly UserController = UserController;
 }

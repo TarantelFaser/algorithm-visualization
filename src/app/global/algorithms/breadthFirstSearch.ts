@@ -15,6 +15,7 @@ export class BreadthFirstSearchController {
     let iterationCounter = 0;
     let foundEnd = false;
     while (!queue.isEmpty() && !foundEnd) {
+      if (GridController.stopAlgorithm) return;
       iterationCounter++;
       let coords = queue.dequeue();
       if (!coords) break;
@@ -24,21 +25,21 @@ export class BreadthFirstSearchController {
       y = coords[1];
       const dir = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]];
       const directions : Direction[] = [Direction.Left, Direction.Right, Direction.Up,  Direction.Down];
-
       //check neighboring cells and enqueue if valid
-      dir.forEach((ar, index) => {
+      for (let index = 0; index < dir.length; index++) {
+        let ar = dir[index];
         let cell = GridController.getCell(ar[0], ar[1]);
         if (cell === cellTypes.End) {
           foundEnd = true; //stop the exploration
           GridController.setCelLDir(ar[0], ar[1], directions[index]);
-          BreadthFirstSearchController.constructPath(ar[0],ar[1]);
+          await BreadthFirstSearchController.constructPath(ar[0], ar[1]);
         } else if (cell === cellTypes.Unused) {
           queue.enqueue(ar);
           GridController.setCelLDir(ar[0], ar[1], directions[index]);
           GridController.setCell(ar[0], ar[1], cellTypes.Highlighted)
           GridController.setCellAge(ar[0], ar[1], iterationCounter);
         }
-      });
+      }
 
       if (BreadthFirstSearchController.showAnimations && iterationCounter % UserController.animationSpeed === 0) {
         await new Promise(f => setTimeout(f, 1));
@@ -63,8 +64,6 @@ export class BreadthFirstSearchController {
         await new Promise(f => setTimeout(f, 40));
       }
     }
-
-    GridController.algorithmDone = true;
   }
 
   private static getNextCell(x:number,y:number) {
