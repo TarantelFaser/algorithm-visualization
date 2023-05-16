@@ -72,3 +72,17 @@ button:hover {
 .inner-form-field {
   font-size: 14px;
 }
+
+.select-option {
+  background-color: $gray-background;
+  color: $yellow-color;
+  border: none;
+}
+
+.select-option:hover {
+  background-color: $darker-gray-color;
+}
+
+.select-option::selection {
+  background-color: $darker-gray-color;
+}

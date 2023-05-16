@@ -41,6 +41,14 @@ button:hover {
   color: #ff2300;
 }
 
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: $orange-color; /*replace with your color*/
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: $orange-color;  /*replace with your color*/
+}
+
 .action-divider {
   background-color: $darker-gray-color;
 }

@@ -1,3 +1,6 @@
+@import '../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import 'colors.scss';
+
 /* You can add global styles to this file, and also import other style files */
 body {
     margin: 0;
@@ -5,13 +8,6 @@ body {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-$yellow-color: #ffd600;
-$orange-color: #FF8800;
-$cyan-color: #16E0BD;
-$blue-color: #78C3FB;
-$purple-color: #89A6FB;
-
 
 $main-border-radius: 10px;
 
