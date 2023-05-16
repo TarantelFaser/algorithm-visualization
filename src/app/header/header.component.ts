@@ -6,6 +6,7 @@ import {GridController} from "../global/gridController";
 import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
 import {UserController} from "../global/userController";
 import {AlgorithmsController} from "../global/algorithmsController";
+import {InfoDialogComponent} from "./info-dialog/info-dialog.component";
 
 @Component({
   selector: 'app-header',
@@ -47,5 +48,13 @@ export class HeaderComponent implements OnInit {
 
     AlgorithmsController.algorithmCanRun = true;
     await BreadthFirstSearchController.bfs();
+  }
+
+  openInfoDialog() {
+    const dialogRef = this.dialog.open(InfoDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

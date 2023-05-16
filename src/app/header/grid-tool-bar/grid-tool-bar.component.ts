@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {DeleteAllDialogComponent} from "../header/delete-all-dialog/delete-all-dialog.component";
-import {cellTypes, useMode} from "../global/enums";
-import {GridController} from "../global/gridController";
-import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
-import {UserController} from "../global/userController";
-import {AlgorithmsController} from "../global/algorithmsController";
+import {DeleteAllDialogComponent} from "../delete-all-dialog/delete-all-dialog.component";
+import {cellTypes, useMode} from "../../global/enums";
+import {GridController} from "../../global/gridController";
+import {BreadthFirstSearchController} from "../../global/algorithms/breadthFirstSearch";
+import {UserController} from "../../global/userController";
+import {AlgorithmsController} from "../../global/algorithmsController";
 
 @Component({
   selector: 'app-grid-tool-bar',

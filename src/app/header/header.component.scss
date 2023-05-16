@@ -21,6 +21,10 @@ $inner-padding: 10px;
   transition: 0.5s;
 }
 
+#help-button {
+  color: $orange-color;
+}
+
 @keyframes actionHover {
   0% { transform: scale(1)}
   50% { transform: scale(1.1)}
