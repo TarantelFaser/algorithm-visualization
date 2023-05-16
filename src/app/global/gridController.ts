@@ -21,7 +21,7 @@ export class GridController {
 
   public static showAnimations = true;
 
-  public static selectedGridGen = "";
+  public static selectedGridGen = "Random";
   public static gridGenOptions = ["Random", "Maze"];
 
   public static getCell(x:number, y:number) : cellTypes {
