@@ -2,7 +2,7 @@ import {cellTypes} from "./enums";
 import {GridController} from "./gridController";
 
 export class AlgorithmsController {
-  public static algorithmCanRun = true;
+  public static algorithmCanRun = false;
 
   public static stopAlgorithm() {
     AlgorithmsController.algorithmCanRun = false;

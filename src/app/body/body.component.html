@@ -9,11 +9,11 @@
           (dragstart)="onDragStart()"
           class="cell">
 
-        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Start)" class="inner-cell cell-start-end inner-cell-animation">
+        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Start)" class="inner-cell cell-start-end start-end-animation">
           <mat-icon disabled="true">my_location</mat-icon>
         </div>
 
-        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.End)" class="inner-cell cell-start-end inner-cell-animation">
+        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.End)" class="inner-cell cell-start-end start-end-animation">
           <mat-icon disabled="true">place</mat-icon>
         </div>
 

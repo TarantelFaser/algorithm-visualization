@@ -50,6 +50,20 @@ $ani-time : 0.3s;
   transition-duration: $ani-time;
 }
 
+.start-end-animation {
+  animation: create_start_end;
+  animation-timing-function: ease;
+  animation-duration: $ani-time;
+  transition-duration: $ani-time;
+}
+
+.start-end-animation:hover {
+  transform: scale(1.2);
+  border-radius: 4px!important;
+  transition-duration: $ani-time;
+  cursor: move;
+}
+
 .inner-cell:hover {
   border-radius: 8px;
   transition-duration: $ani-time;
@@ -108,4 +122,19 @@ $ani-time : 0.3s;
   0% {transform: scale(1)}
   50% {transform: scale(1.45)}
   100% {transform: scale(1)}
+}
+
+@keyframes create_start_end {
+  0% {
+    transform: scale(0.7);
+    border-radius: 50%;
+  }
+  50% {
+    transform: scale(1.2);
+    border-radius: 30%;
+  }
+  100% {
+    transform: scale(1);
+    border-radius: unset;
+  }
 }
