@@ -1,17 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {cellTypes, useMode} from "../global/enums";
+import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {DeleteAllDialogComponent} from "./delete-all-dialog/delete-all-dialog.component";
+import {DeleteAllDialogComponent} from "../header/delete-all-dialog/delete-all-dialog.component";
+import {cellTypes, useMode} from "../global/enums";
 import {GridController} from "../global/gridController";
 import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
 import {UserController} from "../global/userController";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'app-grid-tool-bar',
+  templateUrl: './grid-tool-bar.component.html',
+  styleUrls: ['./grid-tool-bar.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class GridToolBarComponent implements OnInit {
+
+  protected readonly useMode = useMode;
+  protected readonly UserController = UserController;
+  protected readonly GridController = GridController;
+  protected readonly BreadthFirstSearchController = BreadthFirstSearchController;
 
   constructor(public dialog: MatDialog) { }
 
@@ -21,11 +26,6 @@ export class HeaderComponent implements OnInit {
   changeUseMode(mode : useMode) {
     UserController.currentUseMode = mode;
   }
-
-  protected readonly useMode = useMode;
-  protected readonly UserController = UserController;
-  protected readonly GridController = GridController;
-  protected readonly BreadthFirstSearchController = BreadthFirstSearchController;
 
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteAllDialogComponent, {
@@ -39,8 +39,6 @@ export class HeaderComponent implements OnInit {
       }
     });
   }
-
-
 
   async BFS() {
 

@@ -5,14 +5,12 @@ $ani-time : 0.3s;
 #body-container {
   display: grid;
   justify-content: center;
-  height: 100%;
   background-color: $gray-background;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
 }
 
 .grid-container {
   border-radius: 10px;
-  margin: 5px;
 }
 
 .prevent-select {
