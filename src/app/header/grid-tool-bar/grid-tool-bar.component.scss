@@ -69,6 +69,11 @@ button:hover {
   font-size: 10px;
 }
 
+::ng-deep .inner-form-field {
+  color: floralwhite!important;
+}
+
+
 .inner-form-field {
   font-size: 14px;
 }
@@ -85,4 +90,8 @@ button:hover {
 
 .select-option::selection {
   background-color: $darker-gray-color;
+}
+
+.select-panel {
+  border: none;
 }

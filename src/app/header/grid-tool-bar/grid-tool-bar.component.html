@@ -2,8 +2,11 @@
   <div class="hor-container">
     <mat-form-field appearance="fill" class="form-field">
       <mat-label class="inner-form-field">Grid Generation</mat-label>
-      <mat-select [(ngModel)]="GridController.selectedGridGen" name="gridGen" class="inner-form-field">
-        <mat-option *ngFor="let op of GridController.gridGenOptions" [value]="op" class="select-option">
+      <mat-select [(ngModel)]="GridController.selectedGridGen"
+                  name="gridGen"
+                  class="inner-form-field"
+                  panelClass="select-panel">
+        <mat-option *ngFor="let op of GridController.gridGenOptions" [value]="op" class="select-option" >
           {{op}}
         </mat-option>
       </mat-select>
