@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteAllDialogComponent} from "../delete-all-dialog/delete-all-dialog.component";
-import {cellTypes, useMode} from "../../global/enums";
+import {useMode} from "../../global/enums";
 import {GridController} from "../../global/gridController";
 import {BreadthFirstSearchController} from "../../global/algorithms/breadthFirstSearch";
 import {UserController} from "../../global/userController";

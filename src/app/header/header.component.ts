@@ -42,8 +42,6 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-
-
   async BFS() {
 
     AlgorithmsController.algorithmCanRun = true;
@@ -51,7 +49,9 @@ export class HeaderComponent implements OnInit {
   }
 
   openInfoDialog() {
-    const dialogRef = this.dialog.open(InfoDialogComponent);
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      panelClass: 'dialog-css'
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
