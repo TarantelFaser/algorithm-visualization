@@ -1,13 +1,14 @@
 import {Queue} from "../Queue";
-import {Direction, GridController} from "../gridController";
-import {cellTypes} from "../enums";
+import {GridController} from "../gridController";
+import {cellTypes, Direction} from "../enums";
 import {UserController} from "../userController";
+import {AlgorithmsController} from "../algorithmsController";
 
 export class BreadthFirstSearchController {
 
   public static async bfs() {
-    if (GridController.getStartList().length === 0) GridController.algorithmCanRun = false;
-    if (!GridController.algorithmCanRun) return;
+    if (GridController.getStartList().length === 0) AlgorithmsController.algorithmCanRun = false;
+    if (!AlgorithmsController.algorithmCanRun) return;
     let firstStart = GridController.getStartList()[0];
     if (GridController.algorithmDone) GridController.removeAllHighlightsPaths();
     GridController.algorithmDone = false;
@@ -18,7 +19,7 @@ export class BreadthFirstSearchController {
     let iterationCounter = 0;
     let foundEnd = false;
     while (!queue.isEmpty() && !foundEnd) {
-      if (!GridController.algorithmCanRun) return;
+      if (!AlgorithmsController.algorithmCanRun) return;
       iterationCounter++;
       let coords = queue.dequeue();
       if (!coords) break;

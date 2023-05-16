@@ -1,9 +1,10 @@
 import {Component, ElementRef,} from '@angular/core';
-import {cellTypes, useMode} from "../global/enums";
+import {cellTypes, Direction, useMode} from "../global/enums";
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Direction, GridController} from "../global/gridController";
+import {GridController} from "../global/gridController";
 import {UserController} from "../global/userController";
 import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
+import {AlgorithmsController} from "../global/algorithmsController";
 
 @Component({
   selector: 'app-body',
@@ -58,7 +59,7 @@ export class BodyComponent{
     //only deletion usemode has higher priority than dragging
     if (UserController.currentUseMode === useMode.None) {
       if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start)) {
-        GridController.algorithmCanRun = false;
+        AlgorithmsController.algorithmCanRun = false;
         GridController.algorithmDone = false;
         GridController.removeAllHighlightsPaths();
       }
@@ -96,9 +97,9 @@ export class BodyComponent{
   //if algorithm is done, dynamically update path depending on new cells placed
   private async placeCell(x:number, y:number, type:cellTypes) {
     GridController.setCell(x, y, type);
-    if ((UserController.isDraggingStart || GridController.algorithmDone) && GridController.getStartList().length > 0) {
+    if ((UserController.isDraggingStart || GridController.algorithmDone) && AlgorithmsController.algorithmCanRun && GridController.getStartList().length > 0) {
       GridController.showAnimations = false;
-      GridController.algorithmCanRun = true;
+      AlgorithmsController.algorithmCanRun = true;
       await BreadthFirstSearchController.bfs();
       GridController.showAnimations = true;
     }

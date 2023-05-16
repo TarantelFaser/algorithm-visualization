@@ -1,12 +1,7 @@
-import {cellTypes} from "./enums";
+import {cellTypes, Direction} from "./enums";
+import {AlgorithmsController} from "./algorithmsController";
 
-export enum Direction {
-  None,
-  Up,
-  Down,
-  Left,
-  Right
-}
+
 
 
 export class GridController {
@@ -24,8 +19,10 @@ export class GridController {
   public static width = 0;
   public static height = 0;
 
-  public static algorithmCanRun = true;
   public static showAnimations = true;
+
+  public static selectedGridGen = "";
+  public static gridGenOptions = ["Random", "Maze"];
 
   public static getCell(x:number, y:number) : cellTypes {
     if (!GridController.cells) throw new Error("Grid Error!");
@@ -164,5 +161,34 @@ export class GridController {
 
   public static setCelLDir(x:number, y:number, dir:Direction) {
     GridController.path[y][x] = dir;
+  }
+
+  public static generateGrid() {
+    AlgorithmsController.stopAlgorithm();
+
+    if (GridController.selectedGridGen === "Random") {
+      GridController.generateRandomGrid();
+    } else if (GridController.selectedGridGen === "Maze") {
+      GridController.generateMazeGrid();
+    }
+  }
+
+  private static async generateRandomGrid() {
+    if (!GridController.cells) return;
+    let chance = 0.3;
+    for (let y = 0; y < GridController.cells.length; y++) {
+      for (let x = 0; x < GridController.cells[0].length; x++) {
+        if (Math.random() < chance) {
+          GridController.setCell(x, y, cellTypes.Wall);
+        } else {
+          GridController.setCell(x, y, cellTypes.Unused);
+        }
+      }
+      await new Promise(f => setTimeout(f, 1));
+    }
+  }
+
+  private static generateMazeGrid() {
+    return;
   }
 }

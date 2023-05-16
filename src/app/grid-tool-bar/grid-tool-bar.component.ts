@@ -5,6 +5,7 @@ import {cellTypes, useMode} from "../global/enums";
 import {GridController} from "../global/gridController";
 import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
 import {UserController} from "../global/userController";
+import {AlgorithmsController} from "../global/algorithmsController";
 
 @Component({
   selector: 'app-grid-tool-bar',
@@ -34,15 +35,13 @@ export class GridToolBarComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        GridController.setAllCells(cellTypes.Unused);
-        GridController.algorithmCanRun = false;
+        AlgorithmsController.stopAlgorithm();
       }
     });
   }
 
   async BFS() {
-
-    GridController.algorithmCanRun = true;
+    AlgorithmsController.algorithmCanRun = true;
     await BreadthFirstSearchController.bfs();
   }
 }

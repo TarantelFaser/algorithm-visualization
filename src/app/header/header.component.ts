@@ -5,6 +5,7 @@ import {DeleteAllDialogComponent} from "./delete-all-dialog/delete-all-dialog.co
 import {GridController} from "../global/gridController";
 import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
 import {UserController} from "../global/userController";
+import {AlgorithmsController} from "../global/algorithmsController";
 
 @Component({
   selector: 'app-header',
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         GridController.setAllCells(cellTypes.Unused);
-        GridController.algorithmCanRun = false;
+        AlgorithmsController.algorithmCanRun = false;
       }
     });
   }
@@ -44,7 +45,7 @@ export class HeaderComponent implements OnInit {
 
   async BFS() {
 
-    GridController.algorithmCanRun = true;
+    AlgorithmsController.algorithmCanRun = true;
     await BreadthFirstSearchController.bfs();
   }
 }

@@ -13,10 +13,6 @@ $inner-padding: 10px;
   justify-content: space-between;
 }
 
-#action-container {
-  height: 100%;
-}
-
 #action-container > button {
   transition: 0.5s;
 }
@@ -65,4 +61,14 @@ button:hover {
 .selected-action {
   background: $orange-color;
   background: linear-gradient(45deg, $orange-color 29%, $yellow-color 100%);
+}
+
+.form-field {
+  margin-top: -3px;
+  margin-bottom: -18px;
+  font-size: 10px;
+}
+
+.inner-form-field {
+  font-size: 14px;
 }

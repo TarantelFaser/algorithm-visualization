@@ -1,6 +1,23 @@
 <div id="header-container">
-  <div></div>
-  <div class="hor-container" id="action-container">
+  <div class="hor-container">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label class="inner-form-field">Grid Generation</mat-label>
+      <mat-select [(ngModel)]="GridController.selectedGridGen" name="gridGen" class="inner-form-field">
+        <mat-option *ngFor="let op of GridController.gridGenOptions" [value]="op">
+          {{op}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button
+            (click)="GridController.generateGrid()"
+            matTooltip="choose a grid generation algorithm"
+            [matTooltipShowDelay]="500"
+            class="yellow-button">
+      generate
+    </button>
+  </div>
+  <div class="hor-container">
 
     <button mat-raised-button
             (click)="changeUseMode(useMode.PlaceStart)"
