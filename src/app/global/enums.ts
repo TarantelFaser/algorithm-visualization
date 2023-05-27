@@ -11,8 +11,6 @@ export enum cellTypes {
 
 export enum useMode {
   None,
-  PlaceStart,
-  PlaceEnd,
   PlaceWall
 }
 

@@ -41,6 +41,7 @@ $ani-time : 0.3s;
   height: 100%;
   width: 100%;
   border-radius: 2px;
+  transition-duration: $ani-time;
 }
 
 .inner-cell-animation {

@@ -44,7 +44,6 @@ export class GridController {
       GridController.startList.forEach((el) => {
         if (el[0] !== x && el[1] !== y) newList.push(el)})
       GridController.startList = newList;
-
     } else if (GridController.cellEquals(x, y, cellTypes.End)) {
       GridController.endCount--;
       //remove entry from list
@@ -53,6 +52,7 @@ export class GridController {
         if (el[0] !== x && el[1] !== y) newList.push(el)})
       GridController.endList = newList;
     }
+
     if (type === cellTypes.Start) {
       GridController.startCount++;
       GridController.startList.push([x,y]);
@@ -89,6 +89,23 @@ export class GridController {
   }
 
   public static setAllCells(type : cellTypes, width= GridController.cells![0].length, height = GridController.cells!.length) {
+    if (!GridController.cells) throw new Error("Grid Error!");
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        GridController.cells[y][x] = type;
+        GridController.cellAge[y][x] = 0;
+        GridController.path[y][x] = Direction.None;
+      }
+    }
+
+    GridController.startList = [];
+    GridController.endList = [];
+    GridController.startCount = 0;
+    GridController.endCount = 0;
+  }
+
+  public static generateGridArray(width : number, height : number, type : cellTypes){
     if (!GridController.cells) throw new Error("Grid Error!");
     let newCellArray : cellTypes[][] = [];
     let newCellAgeArray : number[][] = [];
@@ -129,10 +146,8 @@ export class GridController {
   }
 
   public static removeAllHighlightsPaths() {
-    let width= GridController.cells![0].length;
-    let height = GridController.cells!.length
-    for (let i = 0; i < height; i++) {
-      for (let j = 0; j < width; j++) {
+    for (let i = 0; i < this.height; i++) {
+      for (let j = 0; j < this.width; j++) {
         let cell = GridController.getCell(j,i);
         if (cell === cellTypes.Highlighted || cell === cellTypes.Path) {
           GridController.setCell(j,i,cellTypes.Unused);
@@ -163,14 +178,15 @@ export class GridController {
     GridController.path[y][x] = dir;
   }
 
-  public static generateGrid() {
+  public static async generateGrid() {
     AlgorithmsController.stopAlgorithm();
 
     if (GridController.selectedGridGen === "Random") {
-      GridController.generateRandomGrid();
+      await GridController.generateRandomGrid();
     } else if (GridController.selectedGridGen === "Maze") {
-      GridController.generateMazeGrid();
+      await GridController.generateMazeRandomPrimAlgorithm();
     }
+    GridController.placeStartEndRandom();
   }
 
   private static async generateRandomGrid() {
@@ -188,7 +204,48 @@ export class GridController {
     }
   }
 
-  private static generateMazeGrid() {
-    return;
+  private static async generateMazeRandomPrimAlgorithm() {
+    console.log("functs")
+    if (!GridController.cells) return;
+
+    //first create a second array to store the maze -> reduces lag
+    let mazeArray : cellTypes[][] = [];
+    for (let y = 0; y < GridController.cells.length; y++) {
+      mazeArray.push([]);
+      for (let x = 0; x < GridController.cells[0].length; x++) {
+        mazeArray[y][x] = cellTypes.Wall;
+      }
+    }
+
+    //secondly copy the maze to GridController.cells row by row
+    for (let y = 0; y < GridController.cells.length; y++) {
+      GridController.cells[y] = mazeArray[y];
+        await new Promise(f => setTimeout(f, 1));
+    }
+  }
+
+  public static placeStartEndRandom() {
+    if (!GridController.cells) return;
+
+    //place start and end randomly, but somewhat centered
+    const centerPlacementPercent = 0.75;
+    let offsetX = Math.floor((1 - centerPlacementPercent) * GridController.width / 2);
+    let offsetY = Math.floor((1 - centerPlacementPercent) * GridController.height / 2);
+    let startX = Math.floor(Math.random() * GridController.width*centerPlacementPercent) + offsetX;
+    let startY = Math.floor(Math.random() * GridController.height*centerPlacementPercent) + offsetY;
+
+    let endX = Math.floor(Math.random() * GridController.width*centerPlacementPercent) + offsetX;
+    let endY = Math.floor(Math.random() * GridController.height*centerPlacementPercent) + offsetY;
+
+    if (startX === endX && startY === endY) {
+      if (startX === 0) {
+        endX++;
+      } else {
+        endX--;
+      }
+    }
+
+    GridController.setCell(startX, startY, cellTypes.Start);
+    GridController.setCell(endX, endY, cellTypes.End);
   }
 }

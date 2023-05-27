@@ -22,43 +22,6 @@
   </div>
   <div class="hor-container">
 
-    <button mat-raised-button
-            (click)="changeUseMode(useMode.PlaceStart)"
-            [ngClass]="UserController.currentUseMode === useMode.PlaceStart ? 'selected-action' : ''"
-            matTooltip="place the starting point"
-            [matTooltipShowDelay]="500"
-            class="yellow-button">
-      <mat-icon>my_location</mat-icon>
-    </button>
-    <button mat-raised-button
-            (click)="changeUseMode(useMode.PlaceEnd)"
-            [ngClass]="UserController.currentUseMode === useMode.PlaceEnd ? 'selected-action' : ''"
-            matTooltip="place the ending point"
-            [matTooltipShowDelay]="500"
-            class="yellow-button">
-      <mat-icon>place</mat-icon>
-    </button>
-
-    <button mat-raised-button
-            (click)="changeUseMode(useMode.PlaceWall)"
-            [ngClass]="UserController.currentUseMode === useMode.PlaceWall ? 'selected-action' : ''"
-            matTooltip="place a wall"
-            [matTooltipShowDelay]="500"
-            class="yellow-button">
-      <mat-icon>account_balance</mat-icon>
-    </button>
-
-    <mat-divider vertical="true" class="action-divider"></mat-divider>
-
-    <button mat-raised-button
-            (click)="changeUseMode(useMode.None)"
-            [ngClass]="UserController.currentUseMode === useMode.None ? 'selected-action' : ''"
-            matTooltip="delete a tile"
-            [matTooltipShowDelay]="500"
-            class="yellow-button">
-      <mat-icon>delete</mat-icon>
-    </button>
-
     <button mat-button
             (click)="openDeleteDialog()"
             matTooltip="delete the whole grid"

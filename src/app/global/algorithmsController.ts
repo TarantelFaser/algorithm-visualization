@@ -7,5 +7,6 @@ export class AlgorithmsController {
   public static stopAlgorithm() {
     AlgorithmsController.algorithmCanRun = false;
     GridController.setAllCells(cellTypes.Unused);
+    GridController.placeStartEndRandom();
   }
 }

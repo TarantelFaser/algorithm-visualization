@@ -17,7 +17,9 @@
           <mat-icon disabled="true">place</mat-icon>
         </div>
 
-        <div *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Wall)" class="inner-cell cell-wall wall-animation"></div>
+        <div  class="inner-cell cell-wall wall-animation"
+              *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Wall)">
+        </div>
 
         <div class="inner-cell cell-highlighted"
              *ngIf="GridController.cellEquals(idx_h,idx_v, cellTypes.Highlighted)"
