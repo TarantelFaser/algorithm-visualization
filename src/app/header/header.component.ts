@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
   protected readonly UserController = UserController;
   protected readonly GridController = GridController;
   protected readonly BreadthFirstSearchController = BreadthFirstSearchController;
+  protected readonly AlgorithmsController = AlgorithmsController;
 
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteAllDialogComponent, {
@@ -36,6 +37,7 @@ export class HeaderComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
+        AlgorithmsController.stopAlgorithm();
         GridController.setAllCells(cellTypes.Unused);
         AlgorithmsController.algorithmCanRun = false;
       }
@@ -43,7 +45,6 @@ export class HeaderComponent implements OnInit {
   }
 
   async BFS() {
-
     AlgorithmsController.algorithmCanRun = true;
     await BreadthFirstSearchController.bfs();
   }
@@ -57,4 +58,5 @@ export class HeaderComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+
 }

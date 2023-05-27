@@ -16,7 +16,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DeleteAllDialogComponent } from './header/delete-all-dialog/delete-all-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {FormsModule} from "@angular/forms";
-import { GridToolBarComponent } from './header/grid-tool-bar/grid-tool-bar.component';
 import { InfoDialogComponent } from './header/info-dialog/info-dialog.component';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { InfoDialogComponent } from './header/info-dialog/info-dialog.component'
     HeaderComponent,
     BodyComponent,
     DeleteAllDialogComponent,
-    GridToolBarComponent,
     InfoDialogComponent,
   ],
   imports: [

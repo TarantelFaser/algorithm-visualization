@@ -9,19 +9,27 @@
     </button>
   </div>
   <div class="hor-container" id="action-container">
-
     <button mat-raised-button
-            (click)="BFS()"
-            matTooltip="run the Breadth-First-Search"
+            (click)="AlgorithmsController.runAlgorithm()"
+            matTooltip="choose a search algorithm"
             [matTooltipShowDelay]="500"
             class="yellow-button">
-      BFS
+      {{AlgorithmsController.selectedAlgorithm}}
     </button>
-
-    <mat-divider vertical="true" class="action-divider"></mat-divider>
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label class="inner-form-field">Search Algorithm</mat-label>
+      <mat-select [(ngModel)]="AlgorithmsController.selectedAlgorithm"
+                  name="gridGen"
+                  class="inner-form-field"
+                  panelClass="select-panel">
+        <mat-option *ngFor="let op of AlgorithmsController.algorithmOptions" [value]="op" class="select-option" >
+          {{op}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <div matTooltip="set the animation speed"
-         matTooltipShowDelay="500">
+         matTooltipShowDelay="350">
       <div class="hor-container" style="height: fit-content; justify-content: center; color: floralwhite">
         animation speed
       </div>
@@ -35,6 +43,36 @@
                   step="1">
       </mat-slider>
     </div>
+
+    <mat-divider vertical="true" class="action-divider"></mat-divider>
+
+    <div class="hor-container">
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label class="inner-form-field">Grid Generation</mat-label>
+        <mat-select [(ngModel)]="GridController.selectedGridGen"
+                    name="gridGen"
+                    class="inner-form-field"
+                    panelClass="select-panel"
+                    matTooltip="generate different grids"
+                    matTooltipShowDelay="350">
+          <mat-option *ngFor="let op of GridController.gridGenOptions"
+                      [value]="op" class="select-option"
+                      (click)="GridController.generateGrid()">
+            {{op}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-divider vertical="true" class="action-divider"></mat-divider>
+
+    <button mat-button
+            (click)="openDeleteDialog()"
+            matTooltip="delete the whole grid"
+            [matTooltipShowDelay]="350"
+            id="delete-all-button">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
 
   </div>
 </div>

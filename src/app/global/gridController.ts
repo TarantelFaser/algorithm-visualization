@@ -21,8 +21,8 @@ export class GridController {
 
   public static showAnimations = true;
 
-  public static selectedGridGen = "Random";
-  public static gridGenOptions = ["Random", "Maze"];
+  public static selectedGridGen = "None";
+  public static gridGenOptions = ["None", "Random", "Maze"];
 
   public static getCell(x:number, y:number) : cellTypes {
     if (!GridController.cells) throw new Error("Grid Error!");
@@ -181,7 +181,9 @@ export class GridController {
   public static async generateGrid() {
     AlgorithmsController.stopAlgorithm();
 
-    if (GridController.selectedGridGen === "Random") {
+    if (GridController.selectedGridGen === "None") {
+      await GridController.setAllCells(cellTypes.Unused);
+    } else if (GridController.selectedGridGen === "Random") {
       await GridController.generateRandomGrid();
     } else if (GridController.selectedGridGen === "Maze") {
       await GridController.generateMazeRandomPrimAlgorithm();

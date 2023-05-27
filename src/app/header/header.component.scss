@@ -1,6 +1,6 @@
 @import "src/colors.scss";
 
-$inner-padding: 10px;
+$inner-padding: 15px;
 
 #header-container {
   display: flex;
@@ -51,6 +51,7 @@ button:hover {
 
 .action-divider {
   background-color: $darker-gray-color;
+  margin: 0 10px 0 10px;
 }
 
 .ver-container {
@@ -77,4 +78,37 @@ button:hover {
 .selected-action {
   background: $orange-color;
   background: linear-gradient(45deg, $orange-color 29%, $yellow-color 100%);
+}
+
+.form-field {
+  margin-top: -3px;
+  margin-bottom: -18px;
+  font-size: 10px;
+}
+
+::ng-deep .inner-form-field {
+  color: floralwhite!important;
+}
+
+
+.inner-form-field {
+  font-size: 14px;
+}
+
+.select-option {
+  background-color: $gray-background;
+  color: $yellow-color;
+  border: none;
+}
+
+.select-option:hover {
+  background-color: $darker-gray-color;
+}
+
+.select-option::selection {
+  background-color: $darker-gray-color;
+}
+
+.select-panel {
+  border: none;
 }
