@@ -207,7 +207,6 @@ export class GridController {
   }
 
   private static async generateMazeRandomPrimAlgorithm() {
-    console.log("functs")
     if (!GridController.cells) return;
 
     //first create a second array to store the maze -> reduces lag
@@ -216,13 +215,66 @@ export class GridController {
       mazeArray.push([]);
       for (let x = 0; x < GridController.cells[0].length; x++) {
         mazeArray[y][x] = cellTypes.Wall;
+        console.log("anything here");
       }
     }
+
+    let wallList : number[][] = [];
+
+    //pick a random starting cell
+    let startX = Math.floor(Math.random() * (GridController.width-2))+1;
+    let startY = Math.floor(Math.random() * (GridController.height-2))+1;
+
+    //set the starting cell to unused
+    mazeArray[startY][startX] = cellTypes.Unused;
+
+    //add all walls of the starting cell to the wall list
+    wallList.push([startX-1, startY]);
+    wallList.push([startX+1, startY]);
+    wallList.push([startX, startY-1]);
+    wallList.push([startX, startY+1]);
+
+    //while there are still walls in the list
+    while (wallList.length > 0) {
+      console.log("loop is executing?!");
+
+      //pick a random wall from the list
+      let wallIndex = Math.floor(Math.random() * wallList.length);
+      let wall = wallList[wallIndex];
+
+      //check if wall is not on the edge
+      if (wall[0] === 0 || wall[0] === GridController.width-1 || wall[1] === 0 || wall[1] === GridController.height-1) {
+        wallList.splice(wallIndex, 1);
+        continue;
+      }
+
+      //if only one neighbor is unused
+      let unusedNeighbors = 0;
+      if (mazeArray[wall[1]][wall[0]-1] === cellTypes.Unused) unusedNeighbors++;
+      if (mazeArray[wall[1]][wall[0]+1] === cellTypes.Unused) unusedNeighbors++;
+      if (mazeArray[wall[1]-1][wall[0]] === cellTypes.Unused) unusedNeighbors++;
+      if (mazeArray[wall[1]+1][wall[0]] === cellTypes.Unused) unusedNeighbors++;
+      if (unusedNeighbors === 1) {
+        //make the wall a passage
+        mazeArray[wall[1]][wall[0]] = cellTypes.Unused;
+
+        //add the neighboring walls to the wall list
+        if (mazeArray[wall[1]][wall[0]-1] === cellTypes.Wall) wallList.push([wall[0]-1, wall[1]]);
+        if (mazeArray[wall[1]][wall[0]+1] === cellTypes.Wall) wallList.push([wall[0]+1, wall[1]]);
+        if (mazeArray[wall[1]-1][wall[0]] === cellTypes.Wall) wallList.push([wall[0], wall[1]-1]);
+        if (mazeArray[wall[1]+1][wall[0]] === cellTypes.Wall) wallList.push([wall[0], wall[1]+1]);
+      }
+
+      //remove the wall from the list
+      wallList.splice(wallIndex, 1);
+    }
+
 
     //secondly copy the maze to GridController.cells row by row
     for (let y = 0; y < GridController.cells.length; y++) {
       GridController.cells[y] = mazeArray[y];
-        await new Promise(f => setTimeout(f, 1));
+      await new Promise(f => setTimeout(f, 1));
+      console.log("anything here");
     }
   }
 
