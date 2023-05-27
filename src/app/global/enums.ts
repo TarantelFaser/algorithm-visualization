@@ -10,8 +10,11 @@ export enum cellTypes {
 }
 
 export enum useMode {
+  NoInteraction,
   None,
-  PlaceWall
+  PlaceWall,
+  DraggingStart,
+  DraggingEnd
 }
 
 export enum Direction {
@@ -20,4 +23,11 @@ export enum Direction {
   Down,
   Left,
   Right
+}
+
+export enum Algorithms {
+  BreadthFirstSearch= "Breadth First Search",
+  DepthFirstSearch = "Depth First Search",
+  Dijkstra = "Dijkstra",
+  AStar = "A*"
 }

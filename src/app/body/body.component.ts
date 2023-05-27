@@ -1,5 +1,5 @@
 import {Component, ElementRef,} from '@angular/core';
-import {cellTypes, Direction, useMode} from "../global/enums";
+import {Algorithms, cellTypes, Direction, useMode} from "../global/enums";
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {GridController} from "../global/gridController";
 import {UserController} from "../global/userController";
@@ -20,6 +20,7 @@ export class BodyComponent{
   protected readonly Direction = Direction;
   protected readonly BreadthFirstSearchController = BreadthFirstSearchController;
   protected readonly UserController = UserController;
+  protected readonly AlgorithmsController = AlgorithmsController;
 
   constructor(private el : ElementRef,
               private snackBar: MatSnackBar) {
@@ -43,17 +44,15 @@ export class BodyComponent{
     GridController.placeStartEndRandom();
   }
 
-  //makes painting one cell easier
-  public mouseDown(idx_h: number, idx_v: number) {
+  public async mouseDown(idx_h: number, idx_v: number) {
     this.isMouseDown = true;
-    if (GridController.getCell(idx_h, idx_v) === cellTypes.Start) {
-      UserController.isDraggingStart = true;
-    }
-    if (GridController.getCell(idx_h, idx_v) === cellTypes.End) {
-      UserController.isDraggingEnd = true;
-    }
 
-    if (GridController.cellEquals(idx_h, idx_v, cellTypes.Unused)
+    //set useMode according to cell being mouse down'ed
+    if (GridController.getCell(idx_h, idx_v) === cellTypes.Start) {
+      UserController.currentUseMode = useMode.DraggingStart;
+    } else if (GridController.getCell(idx_h, idx_v) === cellTypes.End) {
+      UserController.currentUseMode = useMode.DraggingEnd;
+    } else if (GridController.cellEquals(idx_h, idx_v, cellTypes.Unused)
       || GridController.cellEquals(idx_h, idx_v, cellTypes.Highlighted)
       || GridController.cellEquals(idx_h, idx_v, cellTypes.Path)) {
       UserController.currentUseMode = useMode.PlaceWall;
@@ -61,7 +60,7 @@ export class BodyComponent{
       UserController.currentUseMode = useMode.None;
     }
 
-    this.handleMouseAction(idx_h, idx_v);
+    await this.handleMouseAction(idx_h, idx_v);
   }
 
   public async handleMouseAction(idx_h: number, idx_v: number) {
@@ -73,49 +72,43 @@ export class BodyComponent{
 
     switch (UserController.currentUseMode) {
       case useMode.PlaceWall:
-        if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start) || GridController.cellEquals(idx_h, idx_v, cellTypes.End)) break;
-        await this.placeCell(idx_h, idx_v, cellTypes.Wall);
+        if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start)
+         || GridController.cellEquals(idx_h, idx_v, cellTypes.End)) break;
+        GridController.setCell(idx_h, idx_v, cellTypes.Wall);
         break;
       case useMode.None:
-        if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start) || GridController.cellEquals(idx_h, idx_v, cellTypes.End)) break;
-        await this.placeCell(idx_h, idx_v, cellTypes.Unused);
+        if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start)
+         || GridController.cellEquals(idx_h, idx_v, cellTypes.End)) break;
+        GridController.setCell(idx_h, idx_v, cellTypes.Unused);
         break;
     }
   }
 
-  //if algorithm is done, dynamically update path depending on new cells placed
-  private async placeCell(x:number, y:number, type:cellTypes) {
-    GridController.setCell(x, y, type);
-    if ((UserController.isDraggingStart || GridController.algorithmDone) && AlgorithmsController.algorithmCanRun && GridController.getStartList().length > 0) {
-      GridController.showAnimations = false;
-      AlgorithmsController.algorithmCanRun = true;
-      await BreadthFirstSearchController.bfs();
-      GridController.showAnimations = true;
-    }
-  }
-
-  //handle start / end dragging
   private async checkForDragging(idx_h: number, idx_v: number) {
-    if (UserController.isDraggingStart) {
+    if (UserController.currentUseMode === useMode.DraggingStart) {
       if (GridController.cellEquals(idx_h, idx_v, cellTypes.Wall)) return;
       if (GridController.cellEquals(idx_h, idx_v, cellTypes.End)) return;
       //remove old start point
       let oldStart = GridController.getStartList()[0];
       if (!oldStart) return;
       GridController.setCell(oldStart[0], oldStart[1], cellTypes.Unused);
-      await this.placeCell(idx_h, idx_v, cellTypes.Start);
-      return;
+      GridController.setCell(idx_h, idx_v, cellTypes.Start);
+
+      if (!AlgorithmsController.canRun) return;
+      await AlgorithmsController.runAlgorithmNoAnimations();
     }
 
-    if (UserController.isDraggingEnd) {
+    if (UserController.currentUseMode === useMode.DraggingEnd) {
       if (GridController.cellEquals(idx_h, idx_v, cellTypes.Wall)) return;
       if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start)) return;
       //remove old end point
       let oldEnd = GridController.getEndList()[0];
       if (!oldEnd) return;
       GridController.setCell(oldEnd[0], oldEnd[1], cellTypes.Unused);
-      await this.placeCell(idx_h, idx_v, cellTypes.End);
-      return;
+      GridController.setCell(idx_h, idx_v, cellTypes.End);
+
+      if (!AlgorithmsController.canRun) return;
+      if (AlgorithmsController.isDone) await AlgorithmsController.runAlgorithmNoAnimations();
     }
   }
 
@@ -125,8 +118,6 @@ export class BodyComponent{
 
   mouseUp(x: number, y: number) {
     this.isMouseDown = false;
-    UserController.isDraggingStart = false;
-    UserController.isDraggingEnd = false;
-    //GridController.setCell(x,y, GridController.getCell(x,y));
+    UserController.currentUseMode = useMode.NoInteraction;
   }
 }

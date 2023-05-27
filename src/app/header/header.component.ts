@@ -38,15 +38,8 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         AlgorithmsController.stopAlgorithm();
-        GridController.setAllCells(cellTypes.Unused);
-        AlgorithmsController.algorithmCanRun = false;
       }
     });
-  }
-
-  async BFS() {
-    AlgorithmsController.algorithmCanRun = true;
-    await BreadthFirstSearchController.bfs();
   }
 
   openInfoDialog() {

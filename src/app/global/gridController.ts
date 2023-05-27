@@ -8,13 +8,11 @@ export class GridController {
 
   //arrays used for visualization / animations and path construction
   private static cells : cellTypes[][]| undefined = [];
-  private static cellAge : number[][] = [];
   private static path : Direction[][] = []
   private static startCount = 0;
   private static endCount = 0;
   private static startList:number[][] = [];
   private static endList:number[][] = [];
-  public static algorithmDone = false;
 
   public static width = 0;
   public static height = 0;
@@ -23,6 +21,8 @@ export class GridController {
 
   public static selectedGridGen = "None";
   public static gridGenOptions = ["None", "Random", "Maze"];
+
+  public static directions : Direction[] = [Direction.Left, Direction.Right, Direction.Up,  Direction.Down];
 
   public static getCell(x:number, y:number) : cellTypes {
     if (!GridController.cells) throw new Error("Grid Error!");
@@ -80,10 +80,6 @@ export class GridController {
     GridController.cells = array;
   }
 
-  public static setCellAgeArray(array : number[][]) {
-    GridController.cellAge = array;
-  }
-
   public static setDirArray(array : Direction[][]) {
     GridController.path = array;
   }
@@ -94,7 +90,6 @@ export class GridController {
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         GridController.cells[y][x] = type;
-        GridController.cellAge[y][x] = 0;
         GridController.path[y][x] = Direction.None;
       }
     }
@@ -108,34 +103,22 @@ export class GridController {
   public static generateGridArray(width : number, height : number, type : cellTypes){
     if (!GridController.cells) throw new Error("Grid Error!");
     let newCellArray : cellTypes[][] = [];
-    let newCellAgeArray : number[][] = [];
     let newDirArray : Direction[][] = [];
     for (let i = 0; i < height; i++) {
       newCellArray.push([]);
-      newCellAgeArray.push([]);
       newDirArray.push([]);
       for (let j = 0; j < width; j++) {
         newCellArray[i].push(type);
-        newCellAgeArray[i].push(0);
         newDirArray[i].push(Direction.None);
       }
     }
     GridController.setCellArray(newCellArray);
-    GridController.setCellAgeArray(newCellAgeArray);
     GridController.setDirArray(newDirArray);
 
     GridController.startList = [];
     GridController.endList = [];
     GridController.startCount = 0;
     GridController.endCount = 0;
-  }
-
-  public static canPlaceStart() {
-    return GridController.startCount === 0;
-  }
-
-  public static canPlaceEnd() {
-    return GridController.endCount === 0;
   }
 
   public static getStartList() {
@@ -151,30 +134,17 @@ export class GridController {
         let cell = GridController.getCell(j,i);
         if (cell === cellTypes.Highlighted || cell === cellTypes.Path) {
           GridController.setCell(j,i,cellTypes.Unused);
-          GridController.setCelLDir(j,i, Direction.None);
-          GridController.setCellAge(j,i, 0);
+          GridController.setCellDir(j,i, Direction.None);
         }
       }
     }
-  }
-
-  public static getCellAge(x:number, y:number) {
-    return GridController.cellAge[y][x];
-  }
-
-  public static setCellAge(x:number, y:number, age:number) {
-    GridController.cellAge[y][x] = age;
-  }
-
-  public static setCellAgeRelative(x:number, y:number, relative:number) {
-    GridController.cellAge[y][x] += relative;
   }
 
   public static getCellDir(x:number, y:number) {
     return GridController.path[y][x];
   }
 
-  public static setCelLDir(x:number, y:number, dir:Direction) {
+  public static setCellDir(x:number, y:number, dir:Direction) {
     GridController.path[y][x] = dir;
   }
 
@@ -215,7 +185,6 @@ export class GridController {
       mazeArray.push([]);
       for (let x = 0; x < GridController.cells[0].length; x++) {
         mazeArray[y][x] = cellTypes.Wall;
-        console.log("anything here");
       }
     }
 
@@ -236,8 +205,6 @@ export class GridController {
 
     //while there are still walls in the list
     while (wallList.length > 0) {
-      console.log("loop is executing?!");
-
       //pick a random wall from the list
       let wallIndex = Math.floor(Math.random() * wallList.length);
       let wall = wallList[wallIndex];
@@ -272,9 +239,10 @@ export class GridController {
 
     //secondly copy the maze to GridController.cells row by row
     for (let y = 0; y < GridController.cells.length; y++) {
-      GridController.cells[y] = mazeArray[y];
+      for (let x = 0; x < GridController.cells[0].length; x++) {
+        GridController.setCell(x, y, mazeArray[y][x]);
+      }
       await new Promise(f => setTimeout(f, 1));
-      console.log("anything here");
     }
   }
 
@@ -301,5 +269,10 @@ export class GridController {
 
     GridController.setCell(startX, startY, cellTypes.Start);
     GridController.setCell(endX, endY, cellTypes.End);
+  }
+
+  public static getNeighborCellIndex(direction : Direction, x:number, y:number) {
+    let dir = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]];
+    return dir[GridController.directions.indexOf(direction)];
   }
 }
