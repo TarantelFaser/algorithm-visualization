@@ -1,5 +1,5 @@
 import {Component, ElementRef,} from '@angular/core';
-import {Algorithms, cellTypes, Direction, useMode} from "../global/enums";
+import {cellTypes, Direction, useMode} from "../global/enums";
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {GridController} from "../global/gridController";
 import {UserController} from "../global/userController";
@@ -22,8 +22,7 @@ export class BodyComponent{
   protected readonly UserController = UserController;
   protected readonly AlgorithmsController = AlgorithmsController;
 
-  constructor(private el : ElementRef,
-              private snackBar: MatSnackBar) {
+  constructor(private el : ElementRef) {
   }
 
   ngOnInit() {
@@ -116,7 +115,7 @@ export class BodyComponent{
     return false;
   }
 
-  mouseUp(x: number, y: number) {
+  mouseUp() {
     this.isMouseDown = false;
     UserController.currentUseMode = useMode.NoInteraction;
   }

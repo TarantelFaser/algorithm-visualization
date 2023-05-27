@@ -3,7 +3,7 @@
     <tr *ngFor="let row of [].constructor(GridController.height); let idx_v = index" class="cell-row">
       <td *ngFor="let row of [].constructor(GridController.width); let idx_h = index"
           (mousedown)="mouseDown(idx_h, idx_v)"
-          (mouseup)="mouseUp(idx_h, idx_v)"
+          (mouseup)="mouseUp()"
           (mouseenter)="handleMouseAction(idx_h, idx_v)"
           draggable="false"
           (dragstart)="onDragStart()"

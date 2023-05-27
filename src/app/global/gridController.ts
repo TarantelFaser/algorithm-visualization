@@ -1,4 +1,4 @@
-import {cellTypes, Direction} from "./enums";
+import {Algorithms, cellTypes, Direction, GridGeneration} from "./enums";
 import {AlgorithmsController} from "./algorithmsController";
 
 
@@ -19,8 +19,8 @@ export class GridController {
 
   public static showAnimations = true;
 
-  public static selectedGridGen = "None";
-  public static gridGenOptions = ["None", "Random", "Maze"];
+  public static selectedGridGen = GridGeneration.None.valueOf();
+  public static gridGenOptions = Object.values(GridGeneration);
 
   public static directions : Direction[] = [Direction.Left, Direction.Right, Direction.Up,  Direction.Down];
 
@@ -151,11 +151,11 @@ export class GridController {
   public static async generateGrid() {
     AlgorithmsController.stopAlgorithm();
 
-    if (GridController.selectedGridGen === "None") {
+    if (GridController.selectedGridGen === GridGeneration.None) {
       await GridController.setAllCells(cellTypes.Unused);
-    } else if (GridController.selectedGridGen === "Random") {
+    } else if (GridController.selectedGridGen === GridGeneration.Random) {
       await GridController.generateRandomGrid();
-    } else if (GridController.selectedGridGen === "Maze") {
+    } else if (GridController.selectedGridGen === GridGeneration.MazePrim) {
       await GridController.generateMazeRandomPrimAlgorithm();
     }
     GridController.placeStartEndRandom();
@@ -178,7 +178,6 @@ export class GridController {
 
   private static async generateMazeRandomPrimAlgorithm() {
     if (!GridController.cells) return;
-
     //first create a second array to store the maze -> reduces lag
     let mazeArray : cellTypes[][] = [];
     for (let y = 0; y < GridController.cells.length; y++) {
@@ -187,9 +186,7 @@ export class GridController {
         mazeArray[y][x] = cellTypes.Wall;
       }
     }
-
     let wallList : number[][] = [];
-
     //pick a random starting cell
     let startX = Math.floor(Math.random() * (GridController.width-2))+1;
     let startY = Math.floor(Math.random() * (GridController.height-2))+1;

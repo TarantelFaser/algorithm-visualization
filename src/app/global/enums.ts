@@ -31,3 +31,9 @@ export enum Algorithms {
   Dijkstra = "Dijkstra",
   AStar = "A*"
 }
+
+export enum GridGeneration {
+  None = "None",
+  Random = "Random",
+  MazePrim = "Maze (Prim's Algorithm)",
+}

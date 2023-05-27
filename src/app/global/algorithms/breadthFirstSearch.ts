@@ -1,6 +1,6 @@
 import {Queue} from "../Queue";
 import {GridController} from "../gridController";
-import {cellTypes, Direction} from "../enums";
+import {cellTypes} from "../enums";
 import {UserController} from "../userController";
 import {AlgorithmsController} from "../algorithmsController";
 

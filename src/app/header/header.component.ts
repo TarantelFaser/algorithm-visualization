@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {cellTypes, useMode} from "../global/enums";
+import {useMode} from "../global/enums";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteAllDialogComponent} from "./delete-all-dialog/delete-all-dialog.component";
 import {GridController} from "../global/gridController";
