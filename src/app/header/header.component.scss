@@ -24,17 +24,12 @@ $inner-padding: 15px;
 #help-button {
   color: $orange-color;
 }
-
-@keyframes actionHover {
-  0% { transform: scale(1)}
-  50% { transform: scale(1.1)}
-  100% { transform: scale(1)}
+button {
+  transition-duration: 0.5s;
 }
 
 button:hover {
-  animation-name: actionHover;
-  animation-duration: 0.3s;
-  animation-timing-function: ease;
+  transition-duration: 0.5s;
 }
 
 #delete-all-button {
@@ -111,4 +106,27 @@ button:hover {
 
 .select-panel {
   border: none;
+}
+
+.algo-button {
+  background: linear-gradient(-45deg, $orange-color, $yellow-color);
+  background-size: 400% 400%;
+  animation: search_algo_button 7s ease infinite;
+}
+
+.algo-button:hover {
+  transform: scale(1.05);
+  box-shadow: #333333 5px 5px 7px;
+}
+
+@keyframes search_algo_button {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }
