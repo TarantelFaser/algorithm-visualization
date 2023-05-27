@@ -15,6 +15,12 @@ import {InfoDialogComponent} from "./info-dialog/info-dialog.component";
 })
 export class HeaderComponent implements OnInit {
 
+  protected readonly useMode = useMode;
+  protected readonly UserController = UserController;
+  protected readonly GridController = GridController;
+  protected readonly BreadthFirstSearchController = BreadthFirstSearchController;
+  protected readonly AlgorithmsController = AlgorithmsController;
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -24,12 +30,6 @@ export class HeaderComponent implements OnInit {
     UserController.currentUseMode = mode;
   }
 
-  protected readonly useMode = useMode;
-  protected readonly UserController = UserController;
-  protected readonly GridController = GridController;
-  protected readonly BreadthFirstSearchController = BreadthFirstSearchController;
-  protected readonly AlgorithmsController = AlgorithmsController;
-
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteAllDialogComponent, {
       panelClass: 'dialog-css',
@@ -38,6 +38,7 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         AlgorithmsController.stopAlgorithm();
+        GridController.placeStartEndRandom();
       }
     });
   }

@@ -247,20 +247,29 @@ export class GridController {
     if (!GridController.cells) return;
 
     //place start and end randomly, but somewhat centered
-    const centerPlacementPercent = 0.75;
-    let offsetX = Math.floor((1 - centerPlacementPercent) * GridController.width / 2);
-    let offsetY = Math.floor((1 - centerPlacementPercent) * GridController.height / 2);
-    let startX = Math.floor(Math.random() * GridController.width*centerPlacementPercent) + offsetX;
-    let startY = Math.floor(Math.random() * GridController.height*centerPlacementPercent) + offsetY;
+    const centerPlacementPercent = 0.8;
+    const minimumDistance = 0.4 * centerPlacementPercent * Math.min(GridController.width, GridController.height);
 
-    let endX = Math.floor(Math.random() * GridController.width*centerPlacementPercent) + offsetX;
-    let endY = Math.floor(Math.random() * GridController.height*centerPlacementPercent) + offsetY;
+    let startX = 0;
+    let startY = 0;
+    let endX = 0;
+    let endY = 0;
 
-    if (startX === endX && startY === endY) {
-      if (startX === 0) {
-        endX++;
-      } else {
-        endX--;
+    let calcAgain = true;
+    while (calcAgain) {
+      calcAgain = false;
+      let offsetX = Math.floor((1 - centerPlacementPercent) * GridController.width / 2);
+      let offsetY = Math.floor((1 - centerPlacementPercent) * GridController.height / 2);
+      startX = Math.floor(Math.random() * GridController.width*centerPlacementPercent) + offsetX;
+      startY = Math.floor(Math.random() * GridController.height*centerPlacementPercent) + offsetY;
+      endX = Math.floor(Math.random() * GridController.width*centerPlacementPercent) + offsetX;
+      endY = Math.floor(Math.random() * GridController.height*centerPlacementPercent) + offsetY;
+
+      let distance = Math.sqrt(Math.pow(Math.abs(startX - endX), 2) + Math.pow(Math.abs(startY - endY), 2))
+
+      if ((startX === endX && startY === endY)
+        || distance < minimumDistance) {
+        calcAgain = true;
       }
     }
 

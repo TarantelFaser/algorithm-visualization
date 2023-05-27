@@ -14,7 +14,9 @@ export class AlgorithmsController {
 
   public static stopAlgorithm(clearGrid: boolean = true) {
     AlgorithmsController.canRun = false;
-    if (clearGrid) GridController.setAllCells(cellTypes.Unused);
+    if (clearGrid) {
+      GridController.setAllCells(cellTypes.Unused);
+    }
   }
 
   public static async runAlgorithm() {
@@ -29,13 +31,13 @@ export class AlgorithmsController {
 
     if (AlgorithmsController.selectedAlgorithm === Algorithms.BreadthFirstSearch) {
       await BreadthFirstSearchController.bfs();
-    } else if (AlgorithmsController.selectedAlgorithm === Algorithms.DepthFirstSearch) {
+    } /* else if (AlgorithmsController.selectedAlgorithm === Algorithms.DepthFirstSearch) {
       //AlgorithmsController.depthFirstSearch();
     } else if (AlgorithmsController.selectedAlgorithm === Algorithms.Dijkstra) {
       //AlgorithmsController.dijkstra();
     } else if (AlgorithmsController.selectedAlgorithm === Algorithms.AStar) {
       //AlgorithmsController.aStar();
-    }
+    } */
 
     AlgorithmsController.isDone = true;
 

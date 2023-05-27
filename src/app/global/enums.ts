@@ -27,9 +27,9 @@ export enum Direction {
 
 export enum Algorithms {
   BreadthFirstSearch= "Breadth First Search",
-  DepthFirstSearch = "Depth First Search",
-  Dijkstra = "Dijkstra",
-  AStar = "A*"
+  //DepthFirstSearch = "Depth First Search",
+  //Dijkstra = "Dijkstra",
+  //AStar = "A*"
 }
 
 export enum GridGeneration {
