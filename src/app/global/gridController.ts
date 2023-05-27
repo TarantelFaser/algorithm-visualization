@@ -1,4 +1,4 @@
-import {Algorithms, cellTypes, Direction, GridGeneration} from "./enums";
+import {cellTypes, Direction, GridGeneration} from "./enums";
 import {AlgorithmsController} from "./algorithmsController";
 
 

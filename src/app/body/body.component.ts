@@ -1,6 +1,5 @@
 import {Component, ElementRef,} from '@angular/core';
 import {cellTypes, Direction, useMode} from "../global/enums";
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {GridController} from "../global/gridController";
 import {UserController} from "../global/userController";
 import {BreadthFirstSearchController} from "../global/algorithms/breadthFirstSearch";
