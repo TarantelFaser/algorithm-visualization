@@ -29,16 +29,12 @@ export class GridGenerationController {
   }
 
   static getRandomNeighborCell(x:number, y:number) {
-    //check if the cell is not on the edge
-    if (!(x > 0 && x < GridController.width-1 && y > 0 && y < GridController.height-1)) {
-      return null;
-    }
     //create an array of all the neighbors
     let neighbors : number[][] = [];
-    neighbors.push([x-1, y]);
-    neighbors.push([x+1, y]);
-    neighbors.push([x, y-1]);
-    neighbors.push([x, y+1]);
+    if (x-1 >= 0) neighbors.push([x-1, y]);
+    if (x+1 < GridController.width) neighbors.push([x+1, y]);
+    if (y-1 >= 0) neighbors.push([x, y-1]);
+    if (y+1 < GridController.height) neighbors.push([x, y+1]);
     //pick a random neighbor
     return neighbors[Math.floor(Math.random() * neighbors.length)];
   }
@@ -240,5 +236,37 @@ export class GridGenerationController {
       if (cell[0] === wall[0] && cell[1] === wall[1]) return true;
     }
     return false;
+  }
+
+  static async generateMazeAB() {
+    if (!GridController.cells) return;
+    let mazeArray = GridGenerationController.getGridCopy(); //first create a second array to store the maze -> reduces lag
+
+    //all unvisited cells
+    let cellList : number[][] = []
+    for (let y = 1; y < GridController.height; y = y + 2) {
+      for (let x = 1; x < GridController.width; x = x + 2) {
+        cellList.push([x,y]);
+      }
+    }
+
+    let currentCell = cellList[Math.floor(Math.random() * cellList.length)];
+    while (cellList.length > 0) {
+      let neighbor = GridGenerationController.getRandomNeighborCell(currentCell[0], currentCell[1]);
+      //get difference between cells
+      let diffX = neighbor[0] - currentCell[0];
+      let diffY = neighbor[1] - currentCell[1];
+      //get cell next to randomNeighbor according to diff (necessary to keep maze look)
+      let nextCell = [neighbor[0] + diffX, neighbor[1] + diffY];
+      if (nextCell[0] < 0 || nextCell[0] >= GridController.width || nextCell[1] < 0 || nextCell[1] >= GridController.height) continue;
+      if (mazeArray[nextCell[1]][nextCell[0]] === cellTypes.Wall) {
+        mazeArray[neighbor[1]][neighbor[0]] = cellTypes.Unused; //open the corridor
+        mazeArray[nextCell[1]][nextCell[0]] = cellTypes.Unused;
+        cellList.splice(cellList.indexOf(nextCell), 1); //remove the cell from cellList
+      }
+      currentCell = nextCell; //make nextCell the new currentCell
+    }
+
+    await GridGenerationController.copyGridToCells(mazeArray);
   }
 }

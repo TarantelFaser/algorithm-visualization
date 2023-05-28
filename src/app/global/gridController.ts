@@ -177,6 +177,8 @@ export class GridController {
       case GridGeneration.Kruskal:
         await GridGenerationController.generateMazeKruskal();
         break;
+      case GridGeneration.AB:
+        await GridGenerationController.generateMazeAB();
     }
 
     GridController.placeStartEndRandom();

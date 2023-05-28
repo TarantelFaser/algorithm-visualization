@@ -41,4 +41,5 @@ export enum GridGeneration {
   DFS_straightWalls = "Maze (Randomized Depth-First Search)",
   DFS = "Maze (Randomized Depth-First Search, alt)",
   Kruskal = "Maze (Kruskal's Algorithm)",
+  AB = "Maze (Aldous-Broder Algorithm)"
 }
