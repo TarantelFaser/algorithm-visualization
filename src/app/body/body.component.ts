@@ -43,9 +43,10 @@ export class BodyComponent{
   }
 
   public async mouseDown(idx_h: number, idx_v: number) {
+    if (!GridController.getCellArray()) throw new Error("Cells Array Error")
     this.isMouseDown = true;
 
-    //set useMode according to cell being mouse down'ed
+    //set useMode according to cell type
     if (GridController.getCell(idx_h, idx_v) === cellTypes.Start) {
       UserController.currentUseMode = useMode.DraggingStart;
     } else if (GridController.getCell(idx_h, idx_v) === cellTypes.End) {
@@ -62,24 +63,27 @@ export class BodyComponent{
   }
 
   public async handleMouseAction(idx_h: number, idx_v: number) {
-    if (!GridController.getCellArray()) throw new Error("Cells Array Error")
     if (!this.isMouseDown) return;
 
     //handle dragging of start / end
     await this.checkForDragging(idx_h, idx_v);
 
+    //if cell is start / end don't do anything (dragging is handled above)
+    if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start)
+      || GridController.cellEquals(idx_h, idx_v, cellTypes.End)) return;
+
     switch (UserController.currentUseMode) {
       case useMode.PlaceWall:
-        if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start)
-         || GridController.cellEquals(idx_h, idx_v, cellTypes.End)) break;
         GridController.setCell(idx_h, idx_v, cellTypes.Wall);
         break;
       case useMode.None:
-        if (GridController.cellEquals(idx_h, idx_v, cellTypes.Start)
-         || GridController.cellEquals(idx_h, idx_v, cellTypes.End)) break;
         GridController.setCell(idx_h, idx_v, cellTypes.Unused);
         break;
     }
+
+    //rerun algorithm, in case wall was placed / removed in the searched cells
+    if (!AlgorithmsController.canRun) return;
+    await AlgorithmsController.runAlgorithmNoAnimations();
   }
 
   private async checkForDragging(idx_h: number, idx_v: number) {
