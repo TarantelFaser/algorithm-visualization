@@ -36,6 +36,7 @@ export enum GridGeneration {
   None = "None",
   Random = "Random",
   Fill = "Fill",
+  RecursiveDivision = "Maze (Recursive Division)",
   MazePrim_straightWalls = "Maze (Prim's Algorithm)",
   MazePrim = "Maze (Prim's Algorithm, alt)",
   DFS_straightWalls = "Maze (Randomized Depth-First Search)",

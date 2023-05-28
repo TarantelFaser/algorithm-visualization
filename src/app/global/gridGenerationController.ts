@@ -269,4 +269,52 @@ export class GridGenerationController {
 
     await GridGenerationController.copyGridToCells(mazeArray);
   }
+
+  static async generateMazeRecursiveDivision() {
+    await this.recursiveDivision(0, GridController.width-1, 0, GridController.height-1)
+  }
+
+  static async recursiveDivision(startX: number, endX: number, startY: number, endY: number) {
+    let width = endX - startX + 1;
+    let height = endY - startY + 1;
+    if (width < 3 || height < 3) return; //if the area is too small, stop
+
+    if (width > height) {
+      //split vertically, make sure the wall is on an even number
+      let wallX = 1;
+      while (wallX % 2 !== 0) {
+        wallX = startX + Math.floor(Math.random() * (width - 2)) + 1;
+      }
+      // make sure the hole is on an odd number
+      let holeY = 2;
+      while (holeY % 2 !== 1) {
+        holeY = startY + Math.floor(Math.random() * height);
+      }
+      for (let y = startY; y <= endY; y++) {
+        if (y === holeY) continue;
+        GridController.setCell(wallX, y, cellTypes.Wall);
+        await new Promise(f => setTimeout(f, 1));
+      }
+      await this.recursiveDivision(startX, wallX-1, startY, endY);
+      await this.recursiveDivision(wallX+1, endX, startY, endY);
+    } else {
+      //split horizontally, make sure the wall is on an even number
+      let wallY= 1;
+      while (wallY % 2 !== 0) {
+        wallY = startY + Math.floor(Math.random() * (height - 2)) + 1;
+      }
+      // make sure the hole is on an odd number
+      let holeX= 2;
+      while (holeX % 2 !== 1) {
+        holeX = startX + Math.floor(Math.random() * width);
+      }
+      for (let x = startX; x <= endX; x++) {
+        if (x === holeX) continue;
+        GridController.setCell(x, wallY, cellTypes.Wall);
+        await new Promise(f => setTimeout(f, 1));
+      }
+      await this.recursiveDivision(startX, endX, startY, wallY-1);
+      await this.recursiveDivision(startX, endX, wallY+1, endY);
+    }
+  }
 }

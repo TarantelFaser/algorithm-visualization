@@ -179,6 +179,10 @@ export class GridController {
         break;
       case GridGeneration.AB:
         await GridGenerationController.generateMazeAB();
+        break;
+      case GridGeneration.RecursiveDivision:
+        await GridGenerationController.generateMazeRecursiveDivision();
+        break;
     }
 
     GridController.placeStartEndRandom();
