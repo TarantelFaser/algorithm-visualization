@@ -1,5 +1,6 @@
 import {cellTypes, Direction, GridGeneration} from "./enums";
 import {AlgorithmsController} from "./algorithmsController";
+import {GridGenerationController} from "./gridGenerationController";
 
 
 
@@ -7,7 +8,7 @@ import {AlgorithmsController} from "./algorithmsController";
 export class GridController {
 
   //arrays used for visualization / animations and path construction
-  private static cells : cellTypes[][]| undefined = [];
+  static cells : cellTypes[][]| undefined = [];
   private static path : Direction[][] = []
   private static startCount = 0;
   private static endCount = 0;
@@ -154,93 +155,19 @@ export class GridController {
     if (GridController.selectedGridGen === GridGeneration.None) {
       await GridController.setAllCells(cellTypes.Unused);
     } else if (GridController.selectedGridGen === GridGeneration.Random) {
-      await GridController.generateRandomGrid();
+      await GridGenerationController.generateRandomGrid();
+    } else if (GridController.selectedGridGen === GridGeneration.MazePrim_straightWalls) {
+      await GridGenerationController.generateMazeRandomPrimAlgorithm(true);
     } else if (GridController.selectedGridGen === GridGeneration.MazePrim) {
-      await GridController.generateMazeRandomPrimAlgorithm();
+      await GridGenerationController.generateMazeRandomPrimAlgorithm(false);
+    } else if (GridController.selectedGridGen === GridGeneration.DFS_straightWalls) {
+      await GridGenerationController.randomizedDFS(true);
+    } else if (GridController.selectedGridGen === GridGeneration.DFS) {
+      await GridGenerationController.randomizedDFS(false);
+    } else if (GridController.selectedGridGen === GridGeneration.Fill) {
+      await GridGenerationController.fillGrid();
     }
     GridController.placeStartEndRandom();
-  }
-
-  private static async generateRandomGrid() {
-    if (!GridController.cells) return;
-    let chance = 0.3;
-    for (let y = 0; y < GridController.cells.length; y++) {
-      for (let x = 0; x < GridController.cells[0].length; x++) {
-        if (Math.random() < chance) {
-          GridController.setCell(x, y, cellTypes.Wall);
-        } else {
-          GridController.setCell(x, y, cellTypes.Unused);
-        }
-      }
-      await new Promise(f => setTimeout(f, 1));
-    }
-  }
-
-  private static async generateMazeRandomPrimAlgorithm() {
-    if (!GridController.cells) return;
-    //first create a second array to store the maze -> reduces lag
-    let mazeArray : cellTypes[][] = [];
-    for (let y = 0; y < GridController.cells.length; y++) {
-      mazeArray.push([]);
-      for (let x = 0; x < GridController.cells[0].length; x++) {
-        mazeArray[y][x] = cellTypes.Wall;
-      }
-    }
-    let wallList : number[][] = [];
-    //pick a random starting cell
-    let startX = Math.floor(Math.random() * (GridController.width-2))+1;
-    let startY = Math.floor(Math.random() * (GridController.height-2))+1;
-
-    //set the starting cell to unused
-    mazeArray[startY][startX] = cellTypes.Unused;
-
-    //add all walls of the starting cell to the wall list
-    wallList.push([startX-1, startY]);
-    wallList.push([startX+1, startY]);
-    wallList.push([startX, startY-1]);
-    wallList.push([startX, startY+1]);
-
-    //while there are still walls in the list
-    while (wallList.length > 0) {
-      //pick a random wall from the list
-      let wallIndex = Math.floor(Math.random() * wallList.length);
-      let wall = wallList[wallIndex];
-
-      //check if wall is not on the edge
-      if (wall[0] === 0 || wall[0] === GridController.width-1 || wall[1] === 0 || wall[1] === GridController.height-1) {
-        wallList.splice(wallIndex, 1);
-        continue;
-      }
-
-      //if only one neighbor is unused
-      let unusedNeighbors = 0;
-      if (mazeArray[wall[1]][wall[0]-1] === cellTypes.Unused) unusedNeighbors++;
-      if (mazeArray[wall[1]][wall[0]+1] === cellTypes.Unused) unusedNeighbors++;
-      if (mazeArray[wall[1]-1][wall[0]] === cellTypes.Unused) unusedNeighbors++;
-      if (mazeArray[wall[1]+1][wall[0]] === cellTypes.Unused) unusedNeighbors++;
-      if (unusedNeighbors === 1) {
-        //make the wall a passage
-        mazeArray[wall[1]][wall[0]] = cellTypes.Unused;
-
-        //add the neighboring walls to the wall list
-        if (mazeArray[wall[1]][wall[0]-1] === cellTypes.Wall) wallList.push([wall[0]-1, wall[1]]);
-        if (mazeArray[wall[1]][wall[0]+1] === cellTypes.Wall) wallList.push([wall[0]+1, wall[1]]);
-        if (mazeArray[wall[1]-1][wall[0]] === cellTypes.Wall) wallList.push([wall[0], wall[1]-1]);
-        if (mazeArray[wall[1]+1][wall[0]] === cellTypes.Wall) wallList.push([wall[0], wall[1]+1]);
-      }
-
-      //remove the wall from the list
-      wallList.splice(wallIndex, 1);
-    }
-
-
-    //secondly copy the maze to GridController.cells row by row
-    for (let y = 0; y < GridController.cells.length; y++) {
-      for (let x = 0; x < GridController.cells[0].length; x++) {
-        GridController.setCell(x, y, mazeArray[y][x]);
-      }
-      await new Promise(f => setTimeout(f, 1));
-    }
   }
 
   public static placeStartEndRandom() {
