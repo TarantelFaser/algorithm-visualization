@@ -152,21 +152,33 @@ export class GridController {
   public static async generateGrid() {
     AlgorithmsController.stopAlgorithm();
 
-    if (GridController.selectedGridGen === GridGeneration.None) {
-      await GridController.setAllCells(cellTypes.Unused);
-    } else if (GridController.selectedGridGen === GridGeneration.Random) {
-      await GridGenerationController.generateRandomGrid();
-    } else if (GridController.selectedGridGen === GridGeneration.MazePrim_straightWalls) {
-      await GridGenerationController.generateMazeRandomPrimAlgorithm(true);
-    } else if (GridController.selectedGridGen === GridGeneration.MazePrim) {
-      await GridGenerationController.generateMazeRandomPrimAlgorithm(false);
-    } else if (GridController.selectedGridGen === GridGeneration.DFS_straightWalls) {
-      await GridGenerationController.randomizedDFS(true);
-    } else if (GridController.selectedGridGen === GridGeneration.DFS) {
-      await GridGenerationController.randomizedDFS(false);
-    } else if (GridController.selectedGridGen === GridGeneration.Fill) {
-      await GridGenerationController.fillGrid();
+    switch (GridController.selectedGridGen) {
+      case GridGeneration.None:
+        await GridController.setAllCells(cellTypes.Unused);
+        break;
+      case GridGeneration.Random:
+        await GridGenerationController.generateRandomGrid();
+        break;
+      case GridGeneration.MazePrim_straightWalls:
+        await GridGenerationController.generateMazeRandomPrimAlgorithm(true);
+        break;
+      case GridGeneration.MazePrim:
+        await GridGenerationController.generateMazeRandomPrimAlgorithm(false);
+        break;
+      case GridGeneration.DFS_straightWalls:
+        await GridGenerationController.randomizedDFS(true);
+        break;
+      case GridGeneration.DFS:
+        await GridGenerationController.randomizedDFS(false);
+        break;
+      case GridGeneration.Fill:
+        await GridGenerationController.fillGrid();
+        break;
+      case GridGeneration.Kruskal:
+        await GridGenerationController.generateMazeKruskal();
+        break;
     }
+
     GridController.placeStartEndRandom();
   }
 

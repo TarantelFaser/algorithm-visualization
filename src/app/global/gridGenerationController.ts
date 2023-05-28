@@ -180,4 +180,65 @@ export class GridGenerationController {
       await new Promise(f => setTimeout(f, 1));
     }
   }
+
+  static async generateMazeKruskal() {
+    if (!GridController.cells) return;
+    let mazeArray = GridGenerationController.getGridCopy(); //first create a second array to store the maze -> reduces lag
+
+    let cellSets : number[][][] = []
+    for (let y = 1; y < GridController.height; y = y + 2) {
+      for (let x = 1; x < GridController.width; x = x + 2) {
+        cellSets.push([[x,y]]);
+        mazeArray[y][x] = cellTypes.Unused
+      }
+    }
+
+    let wallList:number[][] = [];
+    for (let y = 0; y < GridController.height; y++) {
+      for (let x = 0; x < GridController.width; x++) {
+        if ((x+y) % 2 !== 0) {
+          wallList.push([x,y]);
+        }
+      }
+    }
+
+    //shuffle wallList
+    wallList.sort(() => Math.random() - 0.5);
+
+    for (let wall of wallList) {
+      //find the two sets that the wall separates
+      let set1 : number[][] | undefined = [];
+      let set2 : number[][] | undefined = [];
+      let neighbors = GridGenerationController.getNeighborCellOfTypeArray(wall[0], wall[1], cellTypes.Unused, mazeArray);
+      if (!neighbors || neighbors.length < 2) continue;
+      for (let set of cellSets) { //find the two sets that the wall separates
+        if (GridGenerationController.containsCell(set, neighbors[0])) {
+          set1 = set;
+        }
+        if (GridGenerationController.containsCell(set, neighbors[1])) {
+          set2 = set;
+        }
+      }
+      if (!set1 || !set2 || set1.length === 0 || set2.length === 0) continue;
+      if (set1 === set2) continue; //if the wall is in the same set, skip it
+
+      //remove the wall
+      mazeArray[wall[1]][wall[0]] = cellTypes.Unused;
+      //combine the two sets
+      for (let cell of set2) {
+        set1.push(cell);
+      }
+      //remove set2 from cellSets
+      cellSets.splice(cellSets.indexOf(set2), 1);
+    }
+
+    await GridGenerationController.copyGridToCells(mazeArray);
+  }
+
+  private static containsCell(set: number[][], wall: number[]) {
+    for (let cell of set) {
+      if (cell[0] === wall[0] && cell[1] === wall[1]) return true;
+    }
+    return false;
+  }
 }
