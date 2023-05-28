@@ -150,7 +150,11 @@ export class GridController {
   }
 
   public static async generateGrid() {
+    GridGenerationController.stopGenerating = true;
     AlgorithmsController.stopAlgorithm();
+    await new Promise(f => setTimeout(f, 50)); //there is probably a better way to do this
+    GridGenerationController.stopGenerating = false;
+
 
     switch (GridController.selectedGridGen) {
       case GridGeneration.None:
@@ -173,7 +177,7 @@ export class GridController {
         break;
       case GridGeneration.Fill:
         await GridGenerationController.fillGrid();
-        break;
+        return; //do not place start and end randomly (will only be placed in empty cells -> not possible)
       case GridGeneration.Kruskal:
         await GridGenerationController.generateMazeKruskal();
         break;
@@ -214,6 +218,12 @@ export class GridController {
 
       if ((startX === endX && startY === endY)
         || distance < minimumDistance) {
+        calcAgain = true;
+      }
+
+      //dont destroy any mazes by placing start or end on a wall
+      if (GridController.getCell(startX, startY) === cellTypes.Wall ||
+        GridController.getCell(endX, endY) === cellTypes.Wall) {
         calcAgain = true;
       }
     }

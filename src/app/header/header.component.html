@@ -58,7 +58,7 @@
         <mat-select [(ngModel)]="GridController.selectedGridGen"
                     name="gridGen"
                     class="inner-form-field"
-                    panelClass="select-panel">
+                    panelClass="select-panel long-panel">
           <mat-option *ngFor="let op of GridController.gridGenOptions"
                       [value]="op" class="select-option"
                       (click)="GridController.generateGrid()">

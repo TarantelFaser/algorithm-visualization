@@ -19,6 +19,8 @@ $inner-padding: 15px;
 
 #action-container > button {
   transition: 0.5s;
+  overflow: hidden;
+  min-width: fit-content;
 }
 
 #help-button {
@@ -129,4 +131,8 @@ button:hover {
   100% {
     background-position: 0 50%;
   }
+}
+
+::ng-deep .mat-select-panel.long-panel {
+  max-height: 500px;
 }

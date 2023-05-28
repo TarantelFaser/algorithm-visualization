@@ -3,7 +3,7 @@ import {GridController} from "./gridController";
 
 
 export class GridGenerationController {
-
+  public static stopGenerating = false;
 
   static getGridCopy(type:cellTypes = cellTypes.Wall): cellTypes[][] {
     if (!GridController.cells) return [];
@@ -175,6 +175,14 @@ export class GridGenerationController {
       }
       await new Promise(f => setTimeout(f, 1));
     }
+
+    let start = this.getRandomCell();
+    let end = this.getRandomCell();
+    while (start[0] === end[0] && start[1] === end[1]) {
+      end = this.getRandomCell();
+    }
+    GridController.setCell(start[0], start[1], cellTypes.Start);
+    GridController.setCell(end[0], end[1], cellTypes.End);
   }
 
   static async generateMazeKruskal() {
@@ -275,6 +283,7 @@ export class GridGenerationController {
   }
 
   static async recursiveDivision(startX: number, endX: number, startY: number, endY: number) {
+    if (GridGenerationController.stopGenerating) return;
     let width = endX - startX + 1;
     let height = endY - startY + 1;
     if (width < 3 || height < 3) return; //if the area is too small, stop
